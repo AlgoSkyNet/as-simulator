@@ -48,8 +48,8 @@ results in a space named `People` containing 3 tuples, each put every 2 seconds:
 
 ## XML Schema
 
-The XML schema for configuration files is available at [simulation.xsd](https://github.com/TIBCOSoftware/as-tools/blob/master/com.tibco.as.io.simulation/src/main/resources/simulation.xsd)
+The XML schema for configuration files is available at [simulator.xsd](https://github.com/TIBCOSoftware/as-simulator/blob/master/src/main/resources/simulator.xsd)
 
 ## Complete Example
 
-A example that demonstrates all configuration elements is available at [all.xml](https://github.com/TIBCOSoftware/as-tools/blob/master/as-simulator/src/test/resources/all.xml)
+A example that demonstrates all configuration elements is available at [all.xml](https://github.com/TIBCOSoftware/as-simulator/blob/master/src/test/resources/all.xml)

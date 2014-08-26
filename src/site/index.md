@@ -2,13 +2,13 @@
 
 ### Download
 
-Latest release: <a href="http://activespaces.tibco.com/nexus/service/local/artifact/maven/redirect?r=releases&amp;g=com.tibco.as.io&amp;a=as-simulator&amp;v=LATEST&amp;e=zip&amp;c=distribution" target="_blank" class="btn btn-primary">as-simulator-2.0.0</a>
+<a href="http://activespaces.tibco.com/nexus/service/local/artifact/maven/redirect?r=releases&amp;g=com.tibco.as&amp;a=as-simulator&amp;v=LATEST&amp;e=zip&amp;c=distribution" target="_blank" class="btn btn-primary">Latest release</a>
 
-Development build: <a href="http://activespaces.tibco.com/nexus/service/local/artifact/maven/redirect?r=snapshots&amp;g=com.tibco.as.io&amp;a=as-simulator&amp;v=LATEST&amp;e=zip&amp;c=distribution" target="_blank" class="btn btn-primary">as-simulator-2.0.1-SNAPSHOT</a>
+<a href="http://activespaces.tibco.com/nexus/service/local/artifact/maven/redirect?r=snapshots&amp;g=com.tibco.as&amp;a=as-simulator&amp;v=LATEST&amp;e=zip&amp;c=distribution" target="_blank" class="btn btn-primary">Development build</a>
 
-Source: <a href="https://github.com/TIBCOSoftware/as-tools/tree/master/as-simulator" target="_blank">as-simulator</a>
+<a href="https://github.com/TIBCOSoftware/as-simulator" target="_blank">Source</a>
 
-<a href="https://raw.githubusercontent.com/TIBCOSoftware/as-tools/master/as-simulator/LICENSE.txt" target="_blank">Licenses</a>
+<a href="https://raw.githubusercontent.com/TIBCOSoftware/as-simulator/master/LICENSE" target="_blank">Licenses</a>
 
 ### Installation
 

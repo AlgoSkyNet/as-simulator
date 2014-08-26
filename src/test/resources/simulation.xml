@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <simulation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xsi:noNamespaceSchemaLocation="http://as.tibco.com/simulation.xsd">
+	xsi:noNamespaceSchemaLocation="http://as.tibco.com/simulator.xsd">
 
 	<space name="quote" batchSize="1" size="10" distributionRole="seeder">
 		<item name="ticker" key="true">
