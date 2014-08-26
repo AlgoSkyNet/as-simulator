@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simulation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xsi:noNamespaceSchemaLocation="http://as.tibco.com/simulation.xsd">
+
+	<space name="customer" size="1000" distributionRole="seeder">
+		<sequence name="id" key="true" />
+		<firstName name="firstName" />
+		<lastName name="lastName" />
+		<address name="address" />
+		<birthDate name="dob" />
+		<regex name="phone" regex="[2-9][0-9]{2}-[0-9]{3}-[0-9]{4}" />
+		<emailAddress name="email" />
+		<randomWords name="notes" />
+		<city name="city" />
+		<now name="creationTime" />
+	</space>
+
+	<space name="quote" batchSize="1" sleep="1000" distributionRole="seeder">
+		<item name="ticker" key="true">
+			<value xsi:type="xsd:string">TIBX</value>
+			<value xsi:type="xsd:string">GOOG</value>
+			<value xsi:type="xsd:string">WFM</value>
+			<value xsi:type="xsd:string">INTC</value>
+			<value xsi:type="xsd:string">AMZN</value>
+			<value xsi:type="xsd:string">AAPL</value>
+			<value xsi:type="xsd:string">COST</value>
+			<value xsi:type="xsd:string">DELL</value>
+			<value xsi:type="xsd:string">EXPE</value>
+			<value xsi:type="xsd:string">EBAY</value>
+			<value xsi:type="xsd:string">MYL</value>
+			<value xsi:type="xsd:string">VIAB</value>
+			<value xsi:type="xsd:string">FB</value>
+		</item>
+		<boolean name="owned" />
+		<now name="time" />
+		<double name="bid" min="0" max="1000" decimals="2" />
+		<double name="ask" min="0" max="1000" decimals="2" />
+		<integer name="bidSize" min="0" max="1000" />
+		<integer name="askSize" min="0" max="1000" />
+		<double name="lastSale" min="0" max="1000" decimals="2" />
+		<integer name="lastSize" min="0" max="1000" />
+		<dateTime name="tradeTime" start="2013-10-15T07:20:00-05:00"
+			end="2013-10-15T17:20:00-05:00" />
+		<item name="exchange">
+			<value xsi:type="xsd:string">NYSE</value>
+			<value xsi:type="xsd:string">NASDAQ</value>
+			<value xsi:type="xsd:string">AMEX</value>
+		</item>
+		<integer name="volume" min="0" max="10000" />
+	</space>
+
+	<space name="position" batchSize="1000" size="100000"
+		distributionRole="seeder">
+		<integer name="portfolioId" key="true" min="1" max="100000" />
+		<item name="ticker" key="true">
+			<value xsi:type="xsd:string">TIBX</value>
+			<value xsi:type="xsd:string">GOOG</value>
+			<value xsi:type="xsd:string">WFM</value>
+			<value xsi:type="xsd:string">INTC</value>
+			<value xsi:type="xsd:string">AMZN</value>
+			<value xsi:type="xsd:string">AAPL</value>
+			<value xsi:type="xsd:string">COST</value>
+			<value xsi:type="xsd:string">DELL</value>
+			<value xsi:type="xsd:string">EXPE</value>
+			<value xsi:type="xsd:string">EBAY</value>
+			<value xsi:type="xsd:string">MYL</value>
+			<value xsi:type="xsd:string">VIAB</value>
+			<value xsi:type="xsd:string">FB</value>
+		</item>
+		<integer min="0" max="1000" name="customerId" />
+		<integer name="quantity" max="1000" />
+	</space>
+
+</simulation>

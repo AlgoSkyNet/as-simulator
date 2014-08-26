@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simulation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xsi:noNamespaceSchemaLocation="simulation.xsd">
+	<dataValues>
+		<addresses>
+			<streetName>W Cliff</streetName>
+			<streetName>Nautilus</streetName>
+			<streetName>Kalakaua</streetName>
+			<suffix>Drive</suffix>
+			<suffix>Street</suffix>
+			<suffix>Avenue</suffix>
+			<city>Santa Cruz</city>
+			<city>La Jolla</city>
+			<city>Honolulu</city>
+		</addresses>
+		<contents>
+			<word>surfboard</word>
+			<word>wax</word>
+			<word>leash</word>
+			<businessType>Surf Shop</businessType>
+			<businessType>Fish Market</businessType>
+			<businessType>Hotel</businessType>
+			<emailHost>gma1l</emailHost>
+			<emailHost>hotma1l</emailHost>
+			<emailHost>yah00</emailHost>
+			<tld>org</tld>
+			<tld>net</tld>
+			<tld>com</tld>
+		</contents>
+		<names>
+			<firstName>Kelly</firstName>
+			<firstName>Rob</firstName>
+			<firstName>Joel</firstName>
+			<lastName>Slater</lastName>
+			<lastName>Machado</lastName>
+			<lastName>Tudor</lastName>
+			<prefix>Mr</prefix>
+			<prefix>Mrs</prefix>
+			<prefix>Ms</prefix>
+			<suffix>Phd</suffix>
+			<suffix>Jr</suffix>
+			<suffix>Sr</suffix>
+		</names>
+	</dataValues>
+	<space batchSize="3" distributionRole="seeder" name="people"
+		operation="put" size="100" sleep="1000">
+		<address />
+		<addressLine2 probability="20" />
+		<birthDate />
+		<blob minSize="10" maxSize="20" />
+		<boolean />
+		<businessName />
+		<city />
+		<constant>
+			<value xsi:type="xsd:string">value1</value>
+		</constant>
+		<dateTime dateOnly="false" year="2014" month="11" day="24"
+			hour="10" minute="31" second="59" millisecond="123" />
+		<dateTime name="DateTime2" start="2014-01-01T12:59:24.321-07:00"
+			end="2014-05-30T12:59:24.321-07:00" />
+		<double decimals="5" min="123" max="321" />
+		<emailAddress />
+		<firstName />
+		<float />
+		<integer min="123" max="321" />
+		<item>
+			<value xsi:type="xsd:string">Value 1</value>
+			<value xsi:type="xsd:string">Value 2</value>
+			<value xsi:type="xsd:string">Value 3</value>
+		</item>
+		<lastName />
+		<long />
+		<name />
+		<now />
+		<numberText digits="4" />
+		<prefix chance="30" />
+		<randomChars case="upper" minLength="5" maxLength="10" />
+		<randomChars name="RandomChars2" case="mixed" length="3" />
+		<randomText minLength="2" maxLength="10" />
+		<randomText name="RandomText2" length="5" />
+		<randomWord exactLength="true" length="9" />
+		<randomWord name="RandomWord2" minLength="4" maxLength="10" />
+		<randomWords exactLength="true" length="12" minCount="2"
+			maxCount="4" />
+		<randomWords name="RandomWords2" minLength="3" maxLength="10"
+			minCount="2" maxCount="4" />
+		<regex regex="[2-9][0-9]{2}-[0-9]{3}-[0-9]{4}" />
+		<sequence start="1" end="99" />
+		<short min="2" max="31" />
+		<streetName />
+		<streetSuffix />
+		<suffix chance="50" />
+	</space>
+</simulation>
