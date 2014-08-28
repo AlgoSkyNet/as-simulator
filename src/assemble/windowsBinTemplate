@@ -54,7 +54,7 @@ if "%JAVACMD%"=="" set JAVACMD=#JAVA_BINARY#
 
 if "%REPO%"=="" set REPO=%BASEDIR%\#REPO#
 
-set CLASSPATH=%AS_HOME%\lib\as-common.jar;#CLASSPATH#
+set CLASSPATH=%AS_HOME%\lib\as-common.jar;%AS_HOME%\lib\as-agent.jar;%AS_HOME%\lib\as-admin.jar;#CLASSPATH#
 
 set ENDORSED_DIR=#ENDORSED_DIR#
 if NOT "%ENDORSED_DIR%" == "" set CLASSPATH="%BASEDIR%"\%ENDORSED_DIR%\*;%CLASSPATH%

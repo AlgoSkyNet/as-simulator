@@ -79,7 +79,7 @@ then
   REPO="$BASEDIR"/@REPO@
 fi
 
-CLASSPATH="$AS_HOME"/lib/as-common.jar:@CLASSPATH@
+CLASSPATH="$AS_HOME"/lib/as-common.jar:"$AS_HOME"/lib/as-agent.jar:"$AS_HOME"/lib/as-admin.jar:@CLASSPATH@
 
 ENDORSED_DIR=@ENDORSED_DIR@
 if [ -n "$ENDORSED_DIR" ] ; then
