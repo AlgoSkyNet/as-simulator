@@ -2,13 +2,12 @@
 
 ### Download
 
-<a href="http://activespaces.tibco.com/nexus/service/local/artifact/maven/redirect?r=releases&amp;g=com.tibco.as&amp;a=as-simulator&amp;v=LATEST&amp;e=zip&amp;c=distribution" target="_blank" class="btn btn-primary">Latest release</a>
-
-<a href="http://activespaces.tibco.com/nexus/service/local/artifact/maven/redirect?r=snapshots&amp;g=com.tibco.as&amp;a=as-simulator&amp;v=LATEST&amp;e=zip&amp;c=distribution" target="_blank" class="btn btn-primary">Development build</a>
+<a href="http://activespaces.tibco.com/nexus/service/local/artifact/maven/redirect?r=releases&amp;g=com.tibco.as&amp;a=as-simulator&amp;v=2.0.1&amp;e=zip&amp;c=distribution" target="_blank" class="btn btn-primary">as-simulator-2.0.1</a>
 
 <a href="https://github.com/TIBCOSoftware/as-simulator" target="_blank">Source</a>
 
-<a href="https://raw.githubusercontent.com/TIBCOSoftware/as-simulator/master/LICENSE" target="_blank">Licenses</a>
+<a href="https://raw.githubusercontent.com/TIBCOSoftware/as-simulator/master/LICENSE" target="_blank">License</a>
+
 
 ### Installation
 
