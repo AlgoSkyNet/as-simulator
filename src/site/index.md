@@ -2,7 +2,7 @@
 
 ### Download
 
-<a href="http://activespaces.tibco.com/nexus/service/local/artifact/maven/redirect?r=releases&amp;g=com.tibco.as&amp;a=as-simulator&amp;v=2.0.1&amp;e=zip&amp;c=distribution" target="_blank" class="btn btn-primary">as-simulator-2.0.1</a>
+<a href="http://activespaces.tibco.com/nexus/service/local/artifact/maven/redirect?r=releases&amp;g=com.tibco.as&amp;a=as-simulator&amp;v=2.0.2&amp;e=zip&amp;c=distribution" target="_blank" class="btn btn-primary">as-simulator-2.0.2</a>
 
 <a href="https://github.com/TIBCOSoftware/as-simulator" target="_blank">Source</a>
 
