@@ -15,53 +15,18 @@ import com.tibco.as.convert.ConverterFactory;
 import com.tibco.as.convert.IConverter;
 import com.tibco.as.convert.UnsupportedConversionException;
 import com.tibco.as.convert.array.ArrayToTupleConverter;
+import com.tibco.as.io.AbstractImport;
+import com.tibco.as.io.AbstractImporter;
+import com.tibco.as.io.AbstractTransfer;
 import com.tibco.as.io.Field;
 import com.tibco.as.io.FieldUtils;
-import com.tibco.as.io.Import;
-import com.tibco.as.io.Importer;
-import com.tibco.as.io.Transfer;
-import com.tibco.as.simulator.Address;
-import com.tibco.as.simulator.AddressLine2;
-import com.tibco.as.simulator.BirthDate;
-import com.tibco.as.simulator.BusinessName;
-import com.tibco.as.simulator.City;
-import com.tibco.as.simulator.Constant;
-import com.tibco.as.simulator.EmailAddress;
-import com.tibco.as.simulator.FirstName;
-import com.tibco.as.simulator.Item;
-import com.tibco.as.simulator.LastName;
-import com.tibco.as.simulator.Name;
-import com.tibco.as.simulator.Now;
-import com.tibco.as.simulator.NumberText;
-import com.tibco.as.simulator.Prefix;
-import com.tibco.as.simulator.RandomBlob;
-import com.tibco.as.simulator.RandomBoolean;
-import com.tibco.as.simulator.RandomChar;
-import com.tibco.as.simulator.RandomChars;
-import com.tibco.as.simulator.RandomDateTime;
-import com.tibco.as.simulator.RandomDouble;
-import com.tibco.as.simulator.RandomFloat;
-import com.tibco.as.simulator.RandomInteger;
-import com.tibco.as.simulator.RandomLong;
-import com.tibco.as.simulator.RandomShort;
-import com.tibco.as.simulator.RandomText;
-import com.tibco.as.simulator.RandomWord;
-import com.tibco.as.simulator.RandomWords;
-import com.tibco.as.simulator.Regex;
-import com.tibco.as.simulator.Sequence;
-import com.tibco.as.simulator.SimField;
-import com.tibco.as.simulator.Simulation;
-import com.tibco.as.simulator.Space;
-import com.tibco.as.simulator.StreetName;
-import com.tibco.as.simulator.StreetSuffix;
-import com.tibco.as.simulator.Suffix;
 import com.tibco.as.space.FieldDef;
 import com.tibco.as.space.Metaspace;
 import com.tibco.as.space.SpaceDef;
 import com.tibco.as.space.Tuple;
 import com.tibco.as.util.Utils;
 
-public class SimulationImporter extends Importer<Object[]> {
+public class SimulationImporter extends AbstractImporter<Object[]> {
 
 	private ConverterFactory converterFactory = new ConverterFactory();
 
@@ -109,8 +74,8 @@ public class SimulationImporter extends Importer<Object[]> {
 	}
 
 	@Override
-	protected Collection<Transfer> getTransfers(Metaspace metaspace) {
-		Collection<Transfer> imports = new ArrayList<Transfer>();
+	protected Collection<AbstractTransfer> getTransfers(Metaspace metaspace) {
+		Collection<AbstractTransfer> imports = new ArrayList<AbstractTransfer>();
 		for (Space space : simulation.getSpace()) {
 			SimulationImport simulationImport = ((SimulationImport) getDefaultTransfer())
 					.clone();
@@ -156,7 +121,7 @@ public class SimulationImporter extends Importer<Object[]> {
 	}
 
 	@Override
-	protected SpaceDef createSpaceDef(String spaceName, Import config) {
+	protected void populateSpaceDef(SpaceDef spaceDef, AbstractImport config) {
 		SimulationImport simulation = (SimulationImport) config;
 		Collection<Field> fields = new ArrayList<Field>();
 		if (simulation.getSpace() != null) {
@@ -174,11 +139,11 @@ public class SimulationImporter extends Importer<Object[]> {
 			}
 		}
 		Field[] fieldArray = fields.toArray(new Field[fields.size()]);
-		return FieldUtils.createSpaceDef(spaceName, fieldArray);
+		FieldUtils.populateSpaceDef(spaceDef, fieldArray);
 	}
 
 	@Override
-	protected String getInputSpaceName(Import transfer) {
+	protected String getInputSpaceName(AbstractImport transfer) {
 		return ((SimulationImport) transfer).getSpaceName();
 	}
 
@@ -213,8 +178,9 @@ public class SimulationImporter extends Importer<Object[]> {
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	protected IConverter<Object[], Tuple> getConverter(Transfer transfer,
-			SpaceDef spaceDef) throws UnsupportedConversionException {
+	protected IConverter<Object[], Tuple> getConverter(
+			AbstractTransfer transfer, SpaceDef spaceDef)
+			throws UnsupportedConversionException {
 		SimulationImport simulation = (SimulationImport) transfer;
 		Space space = simulation.getSpace();
 		FieldDef[] fieldDefs = Utils.getFieldDefs(spaceDef);
@@ -304,7 +270,7 @@ public class SimulationImporter extends Importer<Object[]> {
 
 	@Override
 	protected SimulationInputStream getInputStream(Metaspace metaspace,
-			Transfer transfer, SpaceDef spaceDef) {
+			AbstractTransfer transfer, SpaceDef spaceDef) {
 		SimulationImport config = (SimulationImport) transfer;
 		Space space = config.getSpace();
 		Collection<IValueProvider> providers = new ArrayList<IValueProvider>();
