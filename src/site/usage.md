@@ -13,6 +13,8 @@ Usage: as-simulator [options] The list of simulation files to execute
        Distribution role (none, leech, seeder)
     -?, -help
        Print this help message
+    -identity_password
+       Identity password
     -listen
        Listen URL
     -member_name
@@ -25,6 +27,8 @@ Usage: as-simulator [options] The list of simulation files to execute
        Space operation (get, load, none, partial, put, take)
     -rx_buffer_size
        Receive buffer size
+    -security_token
+       Security token path
     -wait_for_ready_timeout
        Wait for ready timeout
     -worker_thread_count

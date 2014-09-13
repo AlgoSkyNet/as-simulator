@@ -7,7 +7,7 @@ import com.tibco.as.io.cli.AbstractCommand;
 public class Application extends AbstractApplication {
 
 	@ParametersDelegate
-	private CommandSimulate command = new CommandSimulate();
+	private SimulateCommand command = new SimulateCommand();
 
 	public static void main(String[] args) throws Exception {
 		new Application().execute(args);
