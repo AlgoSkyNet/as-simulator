@@ -17,7 +17,7 @@ import com.tibco.as.simulator.ObjectFactory;
 import com.tibco.as.simulator.Simulation;
 import com.tibco.as.space.Metaspace;
 
-public class CommandSimulate extends AbstractCommandImport {
+public class SimulateCommand extends AbstractCommandImport {
 
 	@Parameter(description = "The list of simulation files to execute")
 	private List<String> files = new ArrayList<String>();
