@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.tibco.as</groupId>
   <artifactId>as-simulator</artifactId>
-  <version>2.0.8-SNAPSHOT</version>
+  <version>2.0.9-SNAPSHOT</version>
   <packaging>bundle</packaging>
   <name>AS Simulator</name>
   <description>Data simulator for TIBCO ActiveSpaces</description>
