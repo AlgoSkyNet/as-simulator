@@ -12,12 +12,10 @@ import javax.xml.bind.Unmarshaller;
 
 import com.beust.jcommander.Parameter;
 import com.tibco.as.io.IMetaspaceTransfer;
-import com.tibco.as.io.cli.AbstractCommandImport;
-import com.tibco.as.simulator.ObjectFactory;
-import com.tibco.as.simulator.Simulation;
+import com.tibco.as.io.cli.AbstractImportCommand;
 import com.tibco.as.space.Metaspace;
 
-public class SimulateCommand extends AbstractCommandImport {
+public class SimulateCommand extends AbstractImportCommand {
 
 	@Parameter(description = "The list of simulation files to execute")
 	private List<String> files = new ArrayList<String>();

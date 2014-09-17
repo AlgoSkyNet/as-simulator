@@ -18,7 +18,7 @@ import com.tibco.as.convert.array.ArrayToTupleConverter;
 import com.tibco.as.io.AbstractImport;
 import com.tibco.as.io.AbstractImporter;
 import com.tibco.as.io.AbstractTransfer;
-import com.tibco.as.io.Field;
+import com.tibco.as.util.Field;
 import com.tibco.as.io.FieldUtils;
 import com.tibco.as.space.FieldDef;
 import com.tibco.as.space.Metaspace;
