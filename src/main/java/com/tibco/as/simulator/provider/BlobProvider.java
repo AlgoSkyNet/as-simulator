@@ -3,7 +3,7 @@ package com.tibco.as.simulator.provider;
 import java.util.Random;
 
 import com.tibco.as.simulator.IValueProvider;
-import com.tibco.as.simulator.RandomBlob;
+import com.tibco.as.simulator.xml.RandomBlob;
 
 public class BlobProvider implements IValueProvider {
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.fluttercode.datafactory.NameDataValues;
 
-import com.tibco.as.simulator.Names;
+import com.tibco.as.simulator.xml.Names;
 
 public class CustomNameDataValues implements NameDataValues {
 

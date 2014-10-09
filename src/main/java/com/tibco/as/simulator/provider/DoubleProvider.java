@@ -4,15 +4,14 @@ import java.math.BigDecimal;
 import java.util.Random;
 
 import com.tibco.as.simulator.IValueProvider;
-import com.tibco.as.simulator.RandomDouble;
+import com.tibco.as.simulator.xml.RandomDouble;
 
 public class DoubleProvider implements IValueProvider {
 
 	private Random random;
 	private RandomDouble field;
 
-	public DoubleProvider(Random random,
-			RandomDouble field) {
+	public DoubleProvider(Random random, RandomDouble field) {
 		this.random = random;
 		this.field = field;
 	}

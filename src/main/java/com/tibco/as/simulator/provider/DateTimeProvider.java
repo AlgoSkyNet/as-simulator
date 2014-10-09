@@ -6,7 +6,7 @@ import java.util.Random;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import com.tibco.as.simulator.IValueProvider;
-import com.tibco.as.simulator.RandomDateTime;
+import com.tibco.as.simulator.xml.RandomDateTime;
 
 public class DateTimeProvider implements IValueProvider {
 

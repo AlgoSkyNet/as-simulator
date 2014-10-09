@@ -9,7 +9,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.tibco.as.simulator.IValueProvider;
-import com.tibco.as.simulator.Item;
+import com.tibco.as.simulator.xml.Item;
 
 public class ItemProvider implements IValueProvider {
 

@@ -3,7 +3,7 @@ package com.tibco.as.simulator.provider;
 import java.util.Random;
 
 import com.tibco.as.simulator.IValueProvider;
-import com.tibco.as.simulator.RandomShort;
+import com.tibco.as.simulator.xml.RandomShort;
 
 public class ShortProvider implements IValueProvider {
 

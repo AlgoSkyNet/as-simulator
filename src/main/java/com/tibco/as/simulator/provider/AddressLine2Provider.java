@@ -2,8 +2,8 @@ package com.tibco.as.simulator.provider;
 
 import org.fluttercode.datafactory.impl.DataFactory;
 
-import com.tibco.as.simulator.AddressLine2;
 import com.tibco.as.simulator.IValueProvider;
+import com.tibco.as.simulator.xml.AddressLine2;
 
 public class AddressLine2Provider implements IValueProvider {
 

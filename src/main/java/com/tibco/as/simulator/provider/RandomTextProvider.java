@@ -3,7 +3,7 @@ package com.tibco.as.simulator.provider;
 import org.fluttercode.datafactory.impl.DataFactory;
 
 import com.tibco.as.simulator.IValueProvider;
-import com.tibco.as.simulator.RandomText;
+import com.tibco.as.simulator.xml.RandomText;
 
 public class RandomTextProvider implements IValueProvider {
 

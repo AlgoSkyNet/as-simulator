@@ -1,9 +1,6 @@
 package com.tibco.as.simulator;
 
-import java.text.MessageFormat;
-
 import com.tibco.as.io.IInputStream;
-import com.tibco.as.simulator.Space;
 
 public class SimulationInputStream implements IInputStream<Object[]> {
 
@@ -11,30 +8,16 @@ public class SimulationInputStream implements IInputStream<Object[]> {
 
 	private long position;
 
-	private Space space;
+	private SpaceConfig config;
 
-	private SimulationImport config;
-
-	private long size;
-
-	public SimulationInputStream(SimulationImport config,
-			IValueProvider[] providers) {
+	public SimulationInputStream(SpaceConfig config, IValueProvider[] providers) {
 		this.config = config;
-		this.space = config.getSpace();
 		this.providers = providers;
 	}
 
 	@Override
 	public void open() throws Exception {
 		position = 0;
-		size = getSize();
-	}
-
-	private long getSize() {
-		if (space.getSize() == null) {
-			return UNKNOWN_SIZE;
-		}
-		return space.getSize();
 	}
 
 	@Override
@@ -49,14 +32,14 @@ public class SimulationInputStream implements IInputStream<Object[]> {
 
 	@Override
 	public Object[] read() throws Exception {
-		Long sleep = space.getSleep();
+		Long sleep = config.getSleep();
 		if (sleep != null) {
 			Thread.sleep(sleep);
 		}
 		if (isClosed()) {
 			return null;
 		}
-		if (space.getSize() == null || position < space.getSize()) {
+		if (config.getSize() == null || position < config.getSize()) {
 			Object[] data = new Object[providers.length];
 			for (int i = 0; i < providers.length; i++) {
 				data[i] = providers[i].getValue();
@@ -69,7 +52,7 @@ public class SimulationInputStream implements IInputStream<Object[]> {
 
 	@Override
 	public long size() {
-		return size;
+		return config.getSize();
 	}
 
 	@Override
@@ -77,11 +60,6 @@ public class SimulationInputStream implements IInputStream<Object[]> {
 		return position;
 	}
 
-	@Override
-	public String getName() {
-		return MessageFormat.format("space ''{0}''", config.getSpaceName());
-	}
-	
 	@Override
 	public long getOpenTime() {
 		return 0;

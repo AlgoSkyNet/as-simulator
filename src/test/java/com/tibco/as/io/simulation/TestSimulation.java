@@ -1,5 +1,6 @@
 package com.tibco.as.io.simulation;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.regex.Matcher;
@@ -15,11 +16,16 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.tibco.as.simulator.Simulation;
-import com.tibco.as.simulator.SimulationImporter;
+import com.tibco.as.io.DestinationConfig;
+import com.tibco.as.io.Utils;
+import com.tibco.as.simulator.SimulatorApplication;
+import com.tibco.as.simulator.SimulatorChannel;
+import com.tibco.as.simulator.SimulatorConfig;
+import com.tibco.as.simulator.xml.Simulation;
 import com.tibco.as.space.ASException;
 import com.tibco.as.space.DateTime;
 import com.tibco.as.space.FieldDef;
+import com.tibco.as.space.Member.DistributionRole;
 import com.tibco.as.space.MemberDef;
 import com.tibco.as.space.Metaspace;
 import com.tibco.as.space.SpaceDef;
@@ -29,6 +35,10 @@ import com.tibco.as.space.browser.Browser;
 public class TestSimulation {
 
 	private Metaspace metaspace;
+
+	private void execute(String command) throws Exception {
+		SimulatorApplication.main(command.split(" "));
+	}
 
 	@Before
 	public void setup() throws ASException {
@@ -47,14 +57,35 @@ public class TestSimulation {
 
 	@Test
 	public void testCustomers() throws Exception {
-		Simulation simulation = getSimulation("customers.xml");
-		SimulationImporter importer = new SimulationImporter(metaspace,
-				simulation);
-		SpaceDef spaceDef = importer.getSpaceDef("customer");
+		executeChannel("customers.xml");
+		assertCustomerSpace();
+	}
+
+	private void executeChannel(String file) throws Exception {
+		Simulation simulation = getSimulation(file);
+		SimulatorConfig config = SimulatorApplication
+				.getSimulatorConfig(simulation);
+		for (DestinationConfig destination : config.getDestinations()) {
+			destination.setDistributionRole(DistributionRole.SEEDER);
+		}
+		SimulatorChannel channel = new SimulatorChannel(config);
+		channel.open();
+		channel.close();
+	}
+
+	@Test
+	public void testCustomersConfigFile() throws Exception {
+		File file = Utils.copy("customers.xml", Utils.createTempDirectory());
+		execute("-config " + file.getAbsolutePath()
+				+ " -discovery tcp -distribution_role seeder");
+		assertCustomerSpace();
+	}
+
+	private void assertCustomerSpace() throws ASException {
+		SpaceDef spaceDef = metaspace.getSpaceDef("customer");
 		Collection<FieldDef> fieldDefs = spaceDef.getFieldDefs();
 		Assert.assertEquals(10, fieldDefs.size());
 		Assert.assertEquals("id", fieldDefs.iterator().next().getName());
-		importer.execute();
 		Browser browser = metaspace.browse("customer",
 				com.tibco.as.space.browser.BrowserDef.BrowserType.GET);
 		Pattern pattern = Pattern
@@ -74,14 +105,15 @@ public class TestSimulation {
 
 	@Test
 	public void testSimulation() throws Exception {
-		Simulation simulation = getSimulation("simulation.xml");
-		SimulationImporter importer = new SimulationImporter(metaspace,
-				simulation);
-		SpaceDef spaceDef = importer.getSpaceDef("position");
+		executeChannel("simulation.xml");
+		assertPositionSpace();
+	}
+
+	private void assertPositionSpace() throws ASException {
+		SpaceDef spaceDef = metaspace.getSpaceDef("position");
 		FieldDef[] fieldDefs = spaceDef.getFieldDefs().toArray(new FieldDef[0]);
 		Assert.assertEquals(7, fieldDefs.length);
 		Assert.assertEquals("portfolioId", fieldDefs[0].getName());
-		importer.execute();
 		Browser browser = metaspace.browse("quote",
 				com.tibco.as.space.browser.BrowserDef.BrowserType.GET);
 		Tuple tuple;
@@ -94,6 +126,14 @@ public class TestSimulation {
 		}
 		com.tibco.as.space.Space positionSpace = metaspace.getSpace("position");
 		Assert.assertEquals(100000, positionSpace.size());
+	}
+
+	@Test
+	public void testSimulationConfigFile() throws Exception {
+		File file = Utils.copy("simulation.xml", Utils.createTempDirectory());
+		execute("-config " + file.getAbsolutePath()
+				+ " -discovery tcp -distribution_role seeder");
+		assertPositionSpace();
 	}
 
 	private Simulation getSimulation(String resourceName) throws JAXBException {
