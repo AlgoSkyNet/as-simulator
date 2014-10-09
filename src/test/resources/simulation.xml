@@ -2,7 +2,6 @@
 <simulation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xsi:noNamespaceSchemaLocation="http://as.tibco.com/simulator.xsd">
-
   <space name="quote" size="10">
     <item name="ticker" key="true">
       <value xsi:type="xsd:string">TIBX</value>
