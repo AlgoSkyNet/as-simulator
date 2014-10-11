@@ -10,11 +10,10 @@ import com.tibco.as.simulator.xml.RandomDateTime;
 
 public class DateTimeProvider implements IValueProvider {
 
-	private Random random;
+	private Random random = new Random();
 	private RandomDateTime field;
 
-	public DateTimeProvider(Random random, RandomDateTime field) {
-		this.random = random;
+	public DateTimeProvider(RandomDateTime field) {
 		this.field = field;
 	}
 

@@ -7,11 +7,10 @@ import com.tibco.as.simulator.xml.RandomShort;
 
 public class ShortProvider implements IValueProvider {
 
-	private Random random;
+	private Random random = new Random();
 	private RandomShort field;
 
-	public ShortProvider(Random random, RandomShort field) {
-		this.random = random;
+	public ShortProvider(RandomShort field) {
 		this.field = field;
 	}
 

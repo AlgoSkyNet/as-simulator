@@ -7,11 +7,10 @@ import com.tibco.as.simulator.xml.RandomBlob;
 
 public class BlobProvider implements IValueProvider {
 
-	private Random random;
+	private Random random = new Random();
 	private RandomBlob field;
 
-	public BlobProvider(Random random, RandomBlob field) {
-		this.random = random;
+	public BlobProvider(RandomBlob field) {
 		this.field = field;
 	}
 

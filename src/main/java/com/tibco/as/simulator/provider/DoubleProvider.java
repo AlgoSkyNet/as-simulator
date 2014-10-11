@@ -8,11 +8,10 @@ import com.tibco.as.simulator.xml.RandomDouble;
 
 public class DoubleProvider implements IValueProvider {
 
-	private Random random;
+	private Random random = new Random();
 	private RandomDouble field;
 
-	public DoubleProvider(Random random, RandomDouble field) {
-		this.random = random;
+	public DoubleProvider(RandomDouble field) {
 		this.field = field;
 	}
 

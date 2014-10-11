@@ -1,7 +1,6 @@
 package com.tibco.as.simulator;
 
 import com.tibco.as.io.DestinationConfig;
-import com.tibco.as.io.IInputStream;
 
 public class SpaceConfig extends DestinationConfig {
 
@@ -17,9 +16,6 @@ public class SpaceConfig extends DestinationConfig {
 	}
 
 	public Long getSize() {
-		if (size == null) {
-			return IInputStream.UNKNOWN_SIZE;
-		}
 		return size;
 	}
 
@@ -38,6 +34,11 @@ public class SpaceConfig extends DestinationConfig {
 		target.size = size;
 		target.sleep = sleep;
 		super.copyTo(target);
+	}
+
+	@Override
+	public SimulatorFieldConfig createFieldConfig() {
+		return new SimulatorFieldConfig();
 	}
 
 }

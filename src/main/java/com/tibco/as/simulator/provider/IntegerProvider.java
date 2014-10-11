@@ -8,10 +8,9 @@ import com.tibco.as.simulator.xml.RandomInteger;
 public class IntegerProvider implements IValueProvider {
 
 	private RandomInteger field;
-	private Random random;
+	private Random random = new Random();
 
-	public IntegerProvider(Random random, RandomInteger field) {
-		this.random = random;
+	public IntegerProvider(RandomInteger field) {
 		this.field = field;
 	}
 

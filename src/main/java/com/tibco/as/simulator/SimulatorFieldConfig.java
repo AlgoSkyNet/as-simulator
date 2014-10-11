@@ -41,6 +41,30 @@ public class SimulatorFieldConfig extends com.tibco.as.io.FieldConfig {
 	private Field field;
 
 	public Field getField() {
+		if (field == null) {
+			switch (getFieldType()) {
+			case BLOB:
+				return new RandomBlob();
+			case BOOLEAN:
+				return new RandomBoolean();
+			case CHAR:
+				return new RandomChar();
+			case DATETIME:
+				return new RandomDateTime();
+			case DOUBLE:
+				return new RandomDouble();
+			case FLOAT:
+				return new RandomFloat();
+			case INTEGER:
+				return new RandomInteger();
+			case LONG:
+				return new RandomLong();
+			case SHORT:
+				return new RandomShort();
+			default:
+				return new RandomChars();
+			}
+		}
 		return field;
 	}
 

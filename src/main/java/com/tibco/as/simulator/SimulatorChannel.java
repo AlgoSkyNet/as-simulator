@@ -17,14 +17,10 @@ public class SimulatorChannel extends AbstractChannel {
 	}
 
 	@Override
-	protected IDestination createDestination(DestinationConfig config) {
-		return new SimulatorDestination(this, (SpaceConfig) config);
-	}
-
-	public DataFactory getDataFactory() {
+	protected IDestination createDestination(DestinationConfig destination) {
 		DataFactory dataFactory = new DataFactory();
-		if (config.getDataValues() != null) {
-			DataValues dataValues = config.getDataValues();
+		DataValues dataValues = config.getDataValues();
+		if (dataValues != null) {
 			if (dataValues.getAddresses() != null) {
 				dataFactory.setAddressDataValues(new CustomAddressDataValues(
 						dataValues.getAddresses()));
@@ -39,32 +35,7 @@ public class SimulatorChannel extends AbstractChannel {
 						dataValues.getNames()));
 			}
 		}
-		return dataFactory;
+		return new SimulatorDestination(this, (SpaceConfig) destination, dataFactory);
 	}
-
-	// private SimField createField(FieldType fieldType) {
-	// switch (fieldType) {
-	// case BLOB:
-	// return new RandomBlob();
-	// case BOOLEAN:
-	// return new RandomBoolean();
-	// case CHAR:
-	// return new RandomChar();
-	// case DATETIME:
-	// return new RandomDateTime();
-	// case DOUBLE:
-	// return new RandomDouble();
-	// case FLOAT:
-	// return new RandomFloat();
-	// case INTEGER:
-	// return new RandomInteger();
-	// case LONG:
-	// return new RandomLong();
-	// case SHORT:
-	// return new RandomShort();
-	// default:
-	// return new RandomChars();
-	// }
-	// }
 
 }

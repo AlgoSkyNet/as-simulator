@@ -6,11 +6,7 @@ import com.tibco.as.simulator.IValueProvider;
 
 public class LongProvider implements IValueProvider {
 
-	private Random random;
-
-	public LongProvider(Random random) {
-		this.random = random;
-	}
+	private Random random = new Random();
 
 	@Override
 	public Long getValue() {
