@@ -18,6 +18,7 @@ public class SimulatorChannel extends AbstractChannel {
 
 	@Override
 	protected IDestination createDestination(DestinationConfig destination) {
+		SpaceConfig spaceConfig = (SpaceConfig) destination;
 		DataFactory dataFactory = new DataFactory();
 		DataValues dataValues = config.getDataValues();
 		if (dataValues != null) {
@@ -25,7 +26,6 @@ public class SimulatorChannel extends AbstractChannel {
 				dataFactory.setAddressDataValues(new CustomAddressDataValues(
 						dataValues.getAddresses()));
 			}
-
 			if (dataValues.getContents() != null) {
 				dataFactory.setContentDataValues(new CustomContentDataValues(
 						dataValues.getContents()));
@@ -35,7 +35,12 @@ public class SimulatorChannel extends AbstractChannel {
 						dataValues.getNames()));
 			}
 		}
-		return new SimulatorDestination(this, (SpaceConfig) destination, dataFactory);
+		return new SimulatorDestination(this, spaceConfig, dataFactory);
+	}
+
+	@Override
+	protected boolean isWildcard(DestinationConfig destination) {
+		return destination.getSpace() == null;
 	}
 
 }

@@ -19,12 +19,12 @@ public class SimulatorDestination extends AbstractDestination {
 	}
 
 	@Override
-	protected IInputStream getInputStream() throws Exception {
-		return new SimulationInputStream(config, dataFactory);
+	protected IInputStream createInputStream() throws Exception {
+		return new SimulatorInputStream(config, dataFactory);
 	}
 
 	@Override
-	protected IOutputStream getOutputStream() throws Exception {
+	protected IOutputStream createOutputStream() throws Exception {
 		return null;
 	}
 

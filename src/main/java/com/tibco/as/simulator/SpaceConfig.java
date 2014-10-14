@@ -4,8 +4,8 @@ import com.tibco.as.io.DestinationConfig;
 
 public class SpaceConfig extends DestinationConfig {
 
+	private static final long DEFAULT_LIMIT = 100;
 	private Long sleep;
-	private Long size;
 
 	public Long getSleep() {
 		return sleep;
@@ -13,14 +13,6 @@ public class SpaceConfig extends DestinationConfig {
 
 	public void setSleep(Long sleep) {
 		this.sleep = sleep;
-	}
-
-	public Long getSize() {
-		return size;
-	}
-
-	public void setSize(Long size) {
-		this.size = size;
 	}
 
 	@Override
@@ -31,14 +23,22 @@ public class SpaceConfig extends DestinationConfig {
 	}
 
 	public void copyTo(SpaceConfig target) {
-		target.size = size;
 		target.sleep = sleep;
 		super.copyTo(target);
 	}
 
 	@Override
-	public SimulatorFieldConfig createFieldConfig() {
-		return new SimulatorFieldConfig();
+	public SimulatorFieldConfig createField() {
+		return new SimulatorFieldConfig(this);
+	}
+
+	@Override
+	public Long getLimit() {
+		Long limit = super.getLimit();
+		if (limit == null) {
+			return DEFAULT_LIMIT;
+		}
+		return limit;
 	}
 
 }

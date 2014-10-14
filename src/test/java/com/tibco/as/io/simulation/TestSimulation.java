@@ -1,6 +1,7 @@
 package com.tibco.as.io.simulation;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.regex.Matcher;
@@ -25,14 +26,48 @@ import com.tibco.as.simulator.xml.Simulation;
 import com.tibco.as.space.ASException;
 import com.tibco.as.space.DateTime;
 import com.tibco.as.space.FieldDef;
+import com.tibco.as.space.FieldDef.FieldType;
 import com.tibco.as.space.Member.DistributionRole;
 import com.tibco.as.space.MemberDef;
 import com.tibco.as.space.Metaspace;
+import com.tibco.as.space.Space;
 import com.tibco.as.space.SpaceDef;
 import com.tibco.as.space.Tuple;
 import com.tibco.as.space.browser.Browser;
 
 public class TestSimulation {
+
+	public static final String SPACE_NAME = "MySpace";
+	public static final String FIELD_NAME1 = "field1";
+	public static final String FIELD_NAME2 = "field2";
+	public static final String FIELD_NAME3 = "field3";
+	public static final String FIELD_NAME4 = "field4";
+	public static final String FIELD_NAME5 = "field5";
+	public static final String FIELD_NAME6 = "field6";
+	public static final String FIELD_NAME7 = "field7";
+	public static final String FIELD_NAME8 = "field8";
+	public static final String FIELD_NAME9 = "field9";
+	public static final String FIELD_NAME10 = "field10";
+	protected static final FieldDef FIELD1 = FieldDef.create(FIELD_NAME1,
+			FieldType.LONG).setNullable(false);
+	protected static final FieldDef FIELD2 = FieldDef.create(FIELD_NAME2,
+			FieldType.STRING).setNullable(false);
+	protected static final FieldDef FIELD3 = FieldDef.create(FIELD_NAME3,
+			FieldType.DATETIME).setNullable(true);
+	protected static final FieldDef FIELD4 = FieldDef.create(FIELD_NAME4,
+			FieldType.BLOB).setNullable(true);
+	protected static final FieldDef FIELD5 = FieldDef.create(FIELD_NAME5,
+			FieldType.BOOLEAN).setNullable(true);
+	protected static final FieldDef FIELD6 = FieldDef.create(FIELD_NAME6,
+			FieldType.CHAR).setNullable(true);
+	protected static final FieldDef FIELD7 = FieldDef.create(FIELD_NAME7,
+			FieldType.DOUBLE).setNullable(true);
+	protected static final FieldDef FIELD8 = FieldDef.create(FIELD_NAME8,
+			FieldType.FLOAT).setNullable(true);
+	protected static final FieldDef FIELD9 = FieldDef.create(FIELD_NAME9,
+			FieldType.INTEGER).setNullable(true);
+	protected static final FieldDef FIELD10 = FieldDef.create(FIELD_NAME10,
+			FieldType.SHORT).setNullable(true);
 
 	private Metaspace metaspace;
 
@@ -145,6 +180,22 @@ public class TestSimulation {
 		JAXBElement<Simulation> element = (JAXBElement<Simulation>) unmarshaller
 				.unmarshal(classLoader.getResourceAsStream(resourceName));
 		return element.getValue();
+	}
+
+	@Test
+	public void testNoConfig() throws Exception {
+		metaspace.defineSpace(createSpaceDef());
+		Space space = metaspace.getSpace(SPACE_NAME, DistributionRole.SEEDER);
+		execute("-discovery tcp");
+		Assert.assertTrue(space.size() > 0);
+	}
+
+	protected SpaceDef createSpaceDef() {
+		SpaceDef spaceDef = SpaceDef.create(SPACE_NAME, 0, Arrays.asList(
+				FIELD1, FIELD2, FIELD3, FIELD4, FIELD5, FIELD6, FIELD7, FIELD8,
+				FIELD9, FIELD10));
+		spaceDef.setKey(FIELD1.getName(), FIELD2.getName());
+		return spaceDef;
 	}
 
 }

@@ -1,6 +1,5 @@
 package com.tibco.as.simulator;
 
-import com.tibco.as.convert.ConverterFactory;
 import com.tibco.as.simulator.xml.Address;
 import com.tibco.as.simulator.xml.AddressLine2;
 import com.tibco.as.simulator.xml.BirthDate;
@@ -34,11 +33,27 @@ import com.tibco.as.simulator.xml.Sequence;
 import com.tibco.as.simulator.xml.StreetName;
 import com.tibco.as.simulator.xml.StreetSuffix;
 import com.tibco.as.simulator.xml.Suffix;
-import com.tibco.as.space.FieldDef.FieldType;
 
-public class SimulatorFieldConfig extends com.tibco.as.io.FieldConfig {
+public class SimulatorFieldConfig extends com.tibco.as.convert.Field {
 
 	private Field field;
+
+	public SimulatorFieldConfig(SpaceConfig space) {
+		super(space);
+	}
+
+	@Override
+	public SimulatorFieldConfig clone() {
+		SimulatorFieldConfig clone = new SimulatorFieldConfig(
+				(SpaceConfig) getSpace());
+		copyTo(clone);
+		return clone;
+	}
+
+	public void copyTo(SimulatorFieldConfig target) {
+		target.field = field;
+		super.copyTo(target);
+	}
 
 	public Field getField() {
 		if (field == null) {
@@ -84,15 +99,8 @@ public class SimulatorFieldConfig extends com.tibco.as.io.FieldConfig {
 	}
 
 	@Override
-	public FieldType getFieldType() {
-		if (super.getFieldType() == null) {
-			return ConverterFactory.getFieldType(getJavaType());
-		}
-		return super.getFieldType();
-	}
-
-	@Override
 	public Class<?> getJavaType() {
+		Field field = getField();
 		if (field instanceof Address)
 			return java.lang.String.class;
 		else if (field instanceof AddressLine2)

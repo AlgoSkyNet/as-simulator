@@ -5,7 +5,6 @@ import java.util.Collection;
 
 import org.fluttercode.datafactory.impl.DataFactory;
 
-import com.tibco.as.io.FieldConfig;
 import com.tibco.as.io.IInputStream;
 import com.tibco.as.simulator.provider.AddressLine2Provider;
 import com.tibco.as.simulator.provider.AddressProvider;
@@ -73,14 +72,14 @@ import com.tibco.as.simulator.xml.StreetName;
 import com.tibco.as.simulator.xml.StreetSuffix;
 import com.tibco.as.simulator.xml.Suffix;
 
-public class SimulationInputStream implements IInputStream {
+public class SimulatorInputStream implements IInputStream {
 
 	private SpaceConfig config;
 	private DataFactory dataFactory;
 	private IValueProvider[] providers;
-	private long position;
+	private Long position;
 
-	public SimulationInputStream(SpaceConfig config, DataFactory dataFactory) {
+	public SimulatorInputStream(SpaceConfig config, DataFactory dataFactory) {
 		this.config = config;
 		this.dataFactory = dataFactory;
 	}
@@ -88,12 +87,12 @@ public class SimulationInputStream implements IInputStream {
 	@Override
 	public void open() throws Exception {
 		Collection<IValueProvider> list = new ArrayList<IValueProvider>();
-		for (FieldConfig fieldConfig : config.getFields()) {
+		for (com.tibco.as.convert.Field fieldConfig : config.getFields()) {
 			SimulatorFieldConfig field = (SimulatorFieldConfig) fieldConfig;
 			list.add(create(dataFactory, field.getField()));
 		}
 		this.providers = list.toArray(new IValueProvider[list.size()]);
-		position = 0;
+		position = 0L;
 	}
 
 	@Override
@@ -115,27 +114,21 @@ public class SimulationInputStream implements IInputStream {
 		if (isClosed()) {
 			return null;
 		}
-		if (config.getSize() == null || position < config.getSize()) {
-			Object[] data = new Object[providers.length];
-			for (int i = 0; i < providers.length; i++) {
-				data[i] = providers[i].getValue();
-			}
-			position++;
-			return data;
+		Object[] data = new Object[providers.length];
+		for (int i = 0; i < providers.length; i++) {
+			data[i] = providers[i].getValue();
 		}
+		position++;
+		return data;
+	}
+
+	@Override
+	public Long size() {
 		return null;
 	}
 
 	@Override
-	public long size() {
-		if (config.getSize() == null) {
-			return IInputStream.UNKNOWN_SIZE;
-		}
-		return config.getSize();
-	}
-
-	@Override
-	public long getPosition() {
+	public Long getPosition() {
 		return position;
 	}
 
