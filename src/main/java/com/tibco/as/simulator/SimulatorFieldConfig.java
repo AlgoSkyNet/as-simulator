@@ -18,13 +18,13 @@ import com.tibco.as.simulator.xml.Prefix;
 import com.tibco.as.simulator.xml.RandomBlob;
 import com.tibco.as.simulator.xml.RandomBoolean;
 import com.tibco.as.simulator.xml.RandomChar;
-import com.tibco.as.simulator.xml.RandomChars;
 import com.tibco.as.simulator.xml.RandomDateTime;
 import com.tibco.as.simulator.xml.RandomDouble;
 import com.tibco.as.simulator.xml.RandomFloat;
 import com.tibco.as.simulator.xml.RandomInteger;
 import com.tibco.as.simulator.xml.RandomLong;
 import com.tibco.as.simulator.xml.RandomShort;
+import com.tibco.as.simulator.xml.RandomString;
 import com.tibco.as.simulator.xml.RandomText;
 import com.tibco.as.simulator.xml.RandomWord;
 import com.tibco.as.simulator.xml.RandomWords;
@@ -33,24 +33,22 @@ import com.tibco.as.simulator.xml.Sequence;
 import com.tibco.as.simulator.xml.StreetName;
 import com.tibco.as.simulator.xml.StreetSuffix;
 import com.tibco.as.simulator.xml.Suffix;
+import com.tibco.as.space.FieldDef.FieldType;
 
 public class SimulatorFieldConfig extends com.tibco.as.convert.Field {
 
 	private Field field;
 
-	public SimulatorFieldConfig(SpaceConfig space) {
-		super(space);
-	}
-
 	@Override
 	public SimulatorFieldConfig clone() {
-		SimulatorFieldConfig clone = new SimulatorFieldConfig(
-				(SpaceConfig) getSpace());
+		SimulatorFieldConfig clone = new SimulatorFieldConfig();
 		copyTo(clone);
 		return clone;
 	}
 
-	public void copyTo(SimulatorFieldConfig target) {
+	@Override
+	public void copyTo(com.tibco.as.convert.Field fieldConfig) {
+		SimulatorFieldConfig target = (SimulatorFieldConfig) fieldConfig;
 		target.field = field;
 		super.copyTo(target);
 	}
@@ -77,7 +75,7 @@ public class SimulatorFieldConfig extends com.tibco.as.convert.Field {
 			case SHORT:
 				return new RandomShort();
 			default:
-				return new RandomChars();
+				return new RandomString();
 			}
 		}
 		return field;
@@ -89,13 +87,23 @@ public class SimulatorFieldConfig extends com.tibco.as.convert.Field {
 
 	@Override
 	public String getFieldName() {
-		if (super.getFieldName() == null) {
-			if (field.getName() == null) {
+		String fieldName = super.getFieldName();
+		if (fieldName == null) {
+			fieldName = field.getFieldName();
+			if (fieldName == null) {
 				return field.getClass().getSimpleName();
 			}
-			return field.getName();
 		}
-		return super.getFieldName();
+		return fieldName;
+	}
+
+	@Override
+	public FieldType getFieldType() {
+		FieldType fieldType = super.getFieldType();
+		if (fieldType == null) {
+			return getJavaFieldType();
+		}
+		return fieldType;
 	}
 
 	@Override
@@ -145,7 +153,7 @@ public class SimulatorFieldConfig extends com.tibco.as.convert.Field {
 			return java.lang.String.class;
 		else if (field instanceof Prefix)
 			return java.lang.String.class;
-		else if (field instanceof RandomChars)
+		else if (field instanceof RandomString)
 			return java.lang.String.class;
 		else if (field instanceof RandomText)
 			return java.lang.String.class;
@@ -165,15 +173,7 @@ public class SimulatorFieldConfig extends com.tibco.as.convert.Field {
 			return java.util.Calendar.class;
 		else if (field instanceof Regex)
 			return String.class;
-		return super.getJavaType();
-	}
-
-	@Override
-	public Boolean getFieldNullable() {
-		if (super.getFieldNullable() == null) {
-			return field.isNullable();
-		}
-		return super.getFieldNullable();
+		return String.class;
 	}
 
 }

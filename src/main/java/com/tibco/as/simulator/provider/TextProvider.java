@@ -5,12 +5,12 @@ import org.fluttercode.datafactory.impl.DataFactory;
 import com.tibco.as.simulator.IValueProvider;
 import com.tibco.as.simulator.xml.RandomText;
 
-public class RandomTextProvider implements IValueProvider {
+public class TextProvider implements IValueProvider {
 
 	private DataFactory df;
 	private RandomText field;
 
-	public RandomTextProvider(DataFactory df, RandomText field) {
+	public TextProvider(DataFactory df, RandomText field) {
 		this.df = df;
 		this.field = field;
 	}

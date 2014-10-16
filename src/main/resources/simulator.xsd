@@ -62,35 +62,36 @@
     <xsd:choice maxOccurs="unbounded">
       <xsd:element name="blob" type="randomBlob" />
       <xsd:element name="boolean" type="randomBoolean" />
-      <xsd:element name="constant" type="constant" />
+      <xsd:element name="char" type="randomChar" />
       <xsd:element name="dateTime" type="randomDateTime" />
       <xsd:element name="double" type="randomDouble" />
       <xsd:element name="float" type="randomFloat" />
       <xsd:element name="integer" type="randomInteger" />
       <xsd:element name="long" type="randomLong" />
       <xsd:element name="short" type="randomShort" />
-      <xsd:element name="address" type="address" />
-      <xsd:element name="addressLine2" type="addressLine2" />
-      <xsd:element name="birthDate" type="birthDate" />
-      <xsd:element name="businessName" type="businessName" />
-      <xsd:element name="city" type="city" />
-      <xsd:element name="emailAddress" type="emailAddress" />
-      <xsd:element name="firstName" type="firstName" />
-      <xsd:element name="item" type="item" />
-      <xsd:element name="lastName" type="lastName" />
-      <xsd:element name="name" type="name" />
-      <xsd:element name="now" type="now" />
+      <xsd:element name="string" type="randomString" />
+      <xsd:element name="sequence" type="sequence" />
+      <xsd:element name="constant" type="constant" />
       <xsd:element name="numberText" type="numberText" />
-      <xsd:element name="prefix" type="prefix" />
-      <xsd:element name="randomChars" type="randomChars" />
+      <xsd:element name="regex" type="regex" />
+      <xsd:element name="now" type="now" />
+      <xsd:element name="item" type="item" />
+      <xsd:element name="name" type="name" />
       <xsd:element name="randomText" type="randomText" />
       <xsd:element name="randomWord" type="randomWord" />
       <xsd:element name="randomWords" type="randomWords" />
-      <xsd:element name="sequence" type="sequence" />
+      <xsd:element name="firstName" type="firstName" />
+      <xsd:element name="lastName" type="lastName" />
+      <xsd:element name="prefix" type="prefix" />
+      <xsd:element name="suffix" type="suffix" />
+      <xsd:element name="businessName" type="businessName" />
+      <xsd:element name="emailAddress" type="emailAddress" />
+      <xsd:element name="birthDate" type="birthDate" />
+      <xsd:element name="address" type="address" />
+      <xsd:element name="addressLine2" type="addressLine2" />
       <xsd:element name="streetName" type="streetName" />
       <xsd:element name="streetSuffix" type="streetSuffix" />
-      <xsd:element name="suffix" type="suffix" />
-      <xsd:element name="regex" type="regex" />
+      <xsd:element name="city" type="city" />
     </xsd:choice>
     <xsd:attribute name="name" type="xsd:string" use="required" />
     <xsd:attribute name="sleep" type="xsd:long" />
@@ -98,8 +99,7 @@
   </xsd:complexType>
 
   <xsd:complexType name="field">
-    <xsd:attribute name="name" type="xsd:string" />
-    <xsd:attribute name="nullable" type="xsd:boolean" />
+    <xsd:attribute name="fieldName" type="xsd:string" />
     <xsd:attribute name="key" type="xsd:boolean" default="false" />
   </xsd:complexType>
 
@@ -303,7 +303,7 @@
     </xsd:complexContent>
   </xsd:complexType>
 
-  <xsd:complexType name="randomChars">
+  <xsd:complexType name="randomString">
     <xsd:complexContent>
       <xsd:extension base="field">
         <xsd:attribute name="length" type="xsd:int" />

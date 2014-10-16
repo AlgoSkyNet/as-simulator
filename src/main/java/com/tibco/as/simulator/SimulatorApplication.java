@@ -1,15 +1,14 @@
 package com.tibco.as.simulator;
 
-import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.io.File;
 
 import javax.xml.bind.JAXB;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParametersDelegate;
-import com.tibco.as.convert.Direction;
 import com.tibco.as.io.ChannelConfig;
+import com.tibco.as.io.DestinationConfig;
+import com.tibco.as.io.Direction;
 import com.tibco.as.io.IChannel;
 import com.tibco.as.io.cli.AbstractApplication;
 import com.tibco.as.io.cli.ICommand;
@@ -21,6 +20,8 @@ public class SimulatorApplication extends AbstractApplication {
 
 	@Parameter(names = { "-config" }, description = "XML configuration file")
 	private String config;
+	@Parameter(names = { "-save_config" }, description = "Save XML configuration to file")
+	private boolean saveConfig;
 	@ParametersDelegate
 	private SimulatorCommand command = new SimulatorCommand();
 
@@ -45,37 +46,64 @@ public class SimulatorApplication extends AbstractApplication {
 
 	@Override
 	protected SimulatorConfig getChannelConfig() throws Exception {
-		if (config != null) {
-			FileInputStream in = new FileInputStream(config);
-			Simulation simulation = JAXB.unmarshal(in, Simulation.class);
-			return getSimulatorConfig(simulation);
-		}
-		return new SimulatorConfig();
-	}
-
-	public static SimulatorConfig getSimulatorConfig(Simulation simulation) {
 		SimulatorConfig simulatorConfig = new SimulatorConfig();
-		simulatorConfig.setDataValues(simulation.getDataValues());
-		for (Space space : simulation.getSpace()) {
-			SpaceConfig spaceConfig = new SpaceConfig();
-			spaceConfig.setDirection(Direction.IMPORT);
-			spaceConfig.setSpace(space.getName());
-			spaceConfig.setLimit(space.getSize());
-			spaceConfig.setSleep(space.getSleep());
-			Collection<String> keys = new ArrayList<String>();
-			for (Field field : space.getBlobOrBooleanOrConstant()) {
-				SimulatorFieldConfig fieldConfig = new SimulatorFieldConfig(
-						spaceConfig);
-				fieldConfig.setField(field);
-				spaceConfig.getFields().add(fieldConfig);
-				if (field.isKey()) {
-					keys.add(fieldConfig.getFieldName());
+		if (config != null) {
+			File file = new File(config);
+			if (file.exists()) {
+				Simulation simulation = JAXB.unmarshal(file, Simulation.class);
+				simulatorConfig.setDataValues(simulation.getDataValues());
+				for (Space space : simulation.getSpace()) {
+					SpaceConfig spaceConfig = (SpaceConfig) simulatorConfig
+							.addDestinationConfig();
+					spaceConfig.setDirection(Direction.IMPORT);
+					spaceConfig.setSpace(space.getName());
+					spaceConfig.setLimit(space.getSize());
+					spaceConfig.setSleep(space.getSleep());
+					for (Field field : space.getFields()) {
+						SimulatorFieldConfig fieldConfig = (SimulatorFieldConfig) spaceConfig
+								.addField();
+						fieldConfig.setField(field);
+						if (field.isKey()) {
+							spaceConfig.getKeys().add(
+									fieldConfig.getFieldName());
+						}
+					}
 				}
 			}
-			spaceConfig.setKeys(keys);
-			simulatorConfig.getDestinations().add(spaceConfig);
 		}
 		return simulatorConfig;
+	}
+
+	@Override
+	protected void execute(IChannel channel) {
+		super.execute(channel);
+		if (saveConfig) {
+			SimulatorChannel simulatorChannel = (SimulatorChannel) channel;
+			SimulatorConfig simulatorConfig = simulatorChannel.getConfig();
+			Simulation simulation = new Simulation();
+			simulation.setDataValues(simulatorConfig.getDataValues());
+			for (DestinationConfig destination : simulatorConfig
+					.getDestinations()) {
+				SpaceConfig spaceConfig = (SpaceConfig) destination;
+				Space space = new Space();
+				space.setName(spaceConfig.getSpace());
+				space.setSize(spaceConfig.getLimit());
+				space.setSleep(spaceConfig.getSleep());
+				simulation.getSpace().add(space);
+				for (com.tibco.as.convert.Field fieldConfig : destination
+						.getFields()) {
+					SimulatorFieldConfig simulatorField = (SimulatorFieldConfig) fieldConfig;
+					Field field = simulatorField.getField();
+					field.setFieldName(simulatorField.getFieldName());
+					if (spaceConfig.getKeys().contains(
+							simulatorField.getFieldName())) {
+						field.setKey(true);
+					}
+					space.getFields().add(field);
+				}
+			}
+			JAXB.marshal(simulation, new File(config));
+		}
 	}
 
 }

@@ -4,24 +4,29 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.JAXB;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.tibco.as.io.DestinationConfig;
 import com.tibco.as.io.Utils;
 import com.tibco.as.simulator.SimulatorApplication;
-import com.tibco.as.simulator.SimulatorChannel;
-import com.tibco.as.simulator.SimulatorConfig;
+import com.tibco.as.simulator.xml.Field;
+import com.tibco.as.simulator.xml.RandomBoolean;
+import com.tibco.as.simulator.xml.RandomChar;
+import com.tibco.as.simulator.xml.RandomDateTime;
+import com.tibco.as.simulator.xml.RandomDouble;
+import com.tibco.as.simulator.xml.RandomFloat;
+import com.tibco.as.simulator.xml.RandomInteger;
+import com.tibco.as.simulator.xml.RandomLong;
+import com.tibco.as.simulator.xml.RandomShort;
+import com.tibco.as.simulator.xml.RandomString;
 import com.tibco.as.simulator.xml.Simulation;
 import com.tibco.as.space.ASException;
 import com.tibco.as.space.DateTime;
@@ -92,27 +97,19 @@ public class TestSimulation {
 
 	@Test
 	public void testCustomers() throws Exception {
-		executeChannel("customers.xml");
+		executeFile("customers.xml");
 		assertCustomerSpace();
 	}
 
-	private void executeChannel(String file) throws Exception {
-		Simulation simulation = getSimulation(file);
-		SimulatorConfig config = SimulatorApplication
-				.getSimulatorConfig(simulation);
-		for (DestinationConfig destination : config.getDestinations()) {
-			destination.setDistributionRole(DistributionRole.SEEDER);
-		}
-		SimulatorChannel channel = new SimulatorChannel(config);
-		channel.open();
-		channel.close();
+	private void executeFile(String filename) throws Exception {
+		File file = Utils.copy(filename, Utils.createTempDirectory());
+		execute("-discovery tcp -distribution_role seeder -config "
+				+ file.getAbsolutePath());
 	}
 
 	@Test
 	public void testCustomersConfigFile() throws Exception {
-		File file = Utils.copy("customers.xml", Utils.createTempDirectory());
-		execute("-config " + file.getAbsolutePath()
-				+ " -discovery tcp -distribution_role seeder");
+		executeFile("customers.xml");
 		assertCustomerSpace();
 	}
 
@@ -140,7 +137,7 @@ public class TestSimulation {
 
 	@Test
 	public void testSimulation() throws Exception {
-		executeChannel("simulation.xml");
+		executeFile("simulation.xml");
 		assertPositionSpace();
 	}
 
@@ -165,29 +162,44 @@ public class TestSimulation {
 
 	@Test
 	public void testSimulationConfigFile() throws Exception {
-		File file = Utils.copy("simulation.xml", Utils.createTempDirectory());
-		execute("-config " + file.getAbsolutePath()
-				+ " -discovery tcp -distribution_role seeder");
+		executeFile("simulation.xml");
 		assertPositionSpace();
-	}
-
-	private Simulation getSimulation(String resourceName) throws JAXBException {
-		ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-		JAXBContext jc = JAXBContext.newInstance(Simulation.class.getPackage()
-				.getName(), classLoader);
-		Unmarshaller unmarshaller = jc.createUnmarshaller();
-		@SuppressWarnings("unchecked")
-		JAXBElement<Simulation> element = (JAXBElement<Simulation>) unmarshaller
-				.unmarshal(classLoader.getResourceAsStream(resourceName));
-		return element.getValue();
 	}
 
 	@Test
 	public void testNoConfig() throws Exception {
+		File file = new File(Utils.createTempDirectory(), "saved-config.xml");
 		metaspace.defineSpace(createSpaceDef());
 		Space space = metaspace.getSpace(SPACE_NAME, DistributionRole.SEEDER);
-		execute("-discovery tcp");
+		execute("-discovery tcp -config " + file.getAbsolutePath()
+				+ " -save_config");
 		Assert.assertTrue(space.size() > 0);
+		Assert.assertTrue(file.exists());
+		Simulation simulation = JAXB.unmarshal(file, Simulation.class);
+		Assert.assertEquals(1, simulation.getSpace().size());
+		com.tibco.as.simulator.xml.Space xmlSpace = simulation.getSpace()
+				.get(0);
+		List<Field> fields = xmlSpace.getFields();
+		Assert.assertEquals(SPACE_NAME, xmlSpace.getName());
+		Assert.assertEquals(10, fields.size());
+		Field field1 = fields.get(0);
+		Assert.assertEquals(FIELD_NAME1, field1.getFieldName());
+		Assert.assertTrue(field1.isKey());
+		Assert.assertEquals(RandomLong.class, field1.getClass());
+		Field field2 = fields.get(1);
+		Assert.assertEquals(FIELD_NAME2, field2.getFieldName());
+		Assert.assertEquals(RandomString.class, field2.getClass());
+		Assert.assertTrue(field2.isKey());
+		Field field3 = fields.get(2);
+		Assert.assertEquals(FIELD_NAME3, field3.getFieldName());
+		Assert.assertEquals(RandomDateTime.class, field3.getClass());
+		Assert.assertFalse(field3.isKey());
+		Assert.assertEquals(RandomBoolean.class, fields.get(4).getClass());
+		Assert.assertEquals(RandomChar.class, fields.get(5).getClass());
+		Assert.assertEquals(RandomDouble.class, fields.get(6).getClass());
+		Assert.assertEquals(RandomFloat.class, fields.get(7).getClass());
+		Assert.assertEquals(RandomInteger.class, fields.get(8).getClass());
+		Assert.assertEquals(RandomShort.class, fields.get(9).getClass());
 	}
 
 	protected SpaceDef createSpaceDef() {

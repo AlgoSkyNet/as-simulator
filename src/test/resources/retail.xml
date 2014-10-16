@@ -3,26 +3,26 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xsi:noNamespaceSchemaLocation="http://as.tibco.com/simulator.xsd">
   <space name="customers" size="10000">
-    <sequence name="id" start="1" key="true" />
-    <firstName name="firstName" />
-    <lastName name="lastName" />
-    <address name="address" />
-    <birthDate name="dob" />
-    <regex name="phone" regex="[2-9][0-9]{2}-[0-9]{3}-[0-9]{4}" />
-    <emailAddress name="email" />
-    <randomWords name="notes" />
-    <city name="city" />
-    <now name="creationTime" />
+    <sequence fieldName="id" start="1" key="true" />
+    <firstName fieldName="firstName" />
+    <lastName fieldName="lastName" />
+    <address fieldName="address" />
+    <birthDate fieldName="dob" />
+    <regex fieldName="phone" regex="[2-9][0-9]{2}-[0-9]{3}-[0-9]{4}" />
+    <emailAddress fieldName="email" />
+    <randomWords fieldName="notes" />
+    <city fieldName="city" />
+    <now fieldName="creationTime" />
   </space>
   <space name="stores" size="10">
-    <sequence name="id" key="true" start="1" />
+    <sequence fieldName="id" key="true" start="1" />
     <city />
-    <double name="latitude" min="40" max="50" />
-    <double name="longitude" min="80" max="100" />
+    <double fieldName="latitude" min="40" max="50" />
+    <double fieldName="longitude" min="80" max="100" />
   </space>
   <space name="inventory" sleep="100">
-    <integer name="sku" key="true" min="1" max="100" />
-    <integer name="store" key="true" min="1" max="10" />
-    <integer name="qty" min="0" max="1000" />
+    <integer fieldName="sku" key="true" min="1" max="100" />
+    <integer fieldName="store" key="true" min="1" max="10" />
+    <integer fieldName="qty" min="0" max="1000" />
   </space>
 </simulation>

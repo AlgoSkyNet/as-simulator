@@ -3,13 +3,13 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xsi:noNamespaceSchemaLocation="http://as.tibco.com/simulator.xsd">
   <space name="people" size="100000">
-    <sequence name="id" />
+    <sequence fieldName="id" />
     <firstName />
     <lastName />
-    <birthDate name="dob" />
-    <address name="address" />
-    <city name="city" />
-    <regex name="phone" regex="[2-9][0-9]{2}-[0-9]{3}-[0-9]{4}" />
-    <emailAddress name="email" />
+    <birthDate fieldName="dob" />
+    <address fieldName="address" />
+    <city fieldName="city" />
+    <regex fieldName="phone" regex="[2-9][0-9]{2}-[0-9]{3}-[0-9]{4}" />
+    <emailAddress fieldName="email" />
   </space>
 </simulation>

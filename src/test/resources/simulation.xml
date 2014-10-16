@@ -3,7 +3,7 @@
   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
   xsi:noNamespaceSchemaLocation="http://as.tibco.com/simulator.xsd">
   <space name="quote" size="10">
-    <item name="ticker" key="true">
+    <item fieldName="ticker" key="true">
       <value xsi:type="xsd:string">TIBX</value>
       <value xsi:type="xsd:string">GOOG</value>
       <value xsi:type="xsd:string">WFM</value>
@@ -18,26 +18,26 @@
       <value xsi:type="xsd:string">VIAB</value>
       <value xsi:type="xsd:string">FB</value>
     </item>
-    <boolean name="owned" />
-    <now name="time" />
-    <double name="bid" min="0" max="1000" decimals="2" />
-    <double name="ask" min="0" max="1000" decimals="2" />
-    <integer name="bidSize" min="0" max="1000" />
-    <integer name="askSize" min="0" max="1000" />
-    <double name="lastSale" min="0" max="1000" decimals="2" />
-    <integer name="lastSize" min="0" max="1000" />
-    <dateTime name="tradeTime" start="2013-10-15T07:20:00-05:00"
+    <boolean fieldName="owned" />
+    <now fieldName="time" />
+    <double fieldName="bid" min="0" max="1000" decimals="2" />
+    <double fieldName="ask" min="0" max="1000" decimals="2" />
+    <integer fieldName="bidSize" min="0" max="1000" />
+    <integer fieldName="askSize" min="0" max="1000" />
+    <double fieldName="lastSale" min="0" max="1000" decimals="2" />
+    <integer fieldName="lastSize" min="0" max="1000" />
+    <dateTime fieldName="tradeTime" start="2013-10-15T07:20:00-05:00"
       end="2013-10-15T17:20:00-05:00" />
-    <item name="exchange">
+    <item fieldName="exchange">
       <value xsi:type="xsd:string">NYSE</value>
       <value xsi:type="xsd:string">NASDAQ</value>
       <value xsi:type="xsd:string">AMEX</value>
     </item>
-    <integer name="volume" min="0" max="10000" />
+    <integer fieldName="volume" min="0" max="10000" />
   </space>
   <space name="position" size="100000">
-    <sequence name="portfolioId" key="true" />
-    <item name="ticker" key="true">
+    <sequence fieldName="portfolioId" key="true" />
+    <item fieldName="ticker" key="true">
       <value xsi:type="xsd:string">TIBX</value>
       <value xsi:type="xsd:string">GOOG</value>
       <value xsi:type="xsd:string">WFM</value>
@@ -52,9 +52,9 @@
       <value xsi:type="xsd:string">VIAB</value>
       <value xsi:type="xsd:string">FB</value>
     </item>
-    <integer name="quantity" max="1000" />
-    <firstName name="firstName" />
-    <lastName name="lastName" />
+    <integer fieldName="quantity" max="1000" />
+    <firstName fieldName="firstName" />
+    <lastName fieldName="lastName" />
     <city />
     <dateTime />
   </space>

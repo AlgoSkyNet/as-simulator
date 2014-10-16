@@ -8,6 +8,10 @@
     <jaxb:schemaBindings>
       <jaxb:package name="com.tibco.as.simulator.xml"></jaxb:package>
     </jaxb:schemaBindings>
+    <jaxb:bindings
+      node="//xs:complexType[@name='space']//xs:choice">
+      <jaxb:property name="fields" />
+    </jaxb:bindings>
   </jaxb:bindings>
 
 </jaxb:bindings>

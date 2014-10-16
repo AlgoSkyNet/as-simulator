@@ -5,7 +5,13 @@ import com.tibco.as.io.DestinationConfig;
 public class SpaceConfig extends DestinationConfig {
 
 	private static final long DEFAULT_LIMIT = 100;
+
+	private SimulatorConfig channel;
 	private Long sleep;
+
+	public SpaceConfig(SimulatorConfig channel) {
+		this.channel = channel;
+	}
 
 	public Long getSleep() {
 		return sleep;
@@ -17,7 +23,7 @@ public class SpaceConfig extends DestinationConfig {
 
 	@Override
 	public SpaceConfig clone() {
-		SpaceConfig export = new SpaceConfig();
+		SpaceConfig export = new SpaceConfig(channel);
 		copyTo(export);
 		return export;
 	}
@@ -28,8 +34,8 @@ public class SpaceConfig extends DestinationConfig {
 	}
 
 	@Override
-	public SimulatorFieldConfig createField() {
-		return new SimulatorFieldConfig(this);
+	protected SimulatorFieldConfig newField() {
+		return new SimulatorFieldConfig();
 	}
 
 	@Override
@@ -39,6 +45,11 @@ public class SpaceConfig extends DestinationConfig {
 			return DEFAULT_LIMIT;
 		}
 		return limit;
+	}
+
+	@Override
+	public boolean isWildcard() {
+		return getSpace() == null;
 	}
 
 }

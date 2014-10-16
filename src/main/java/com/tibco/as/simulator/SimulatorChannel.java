@@ -16,6 +16,10 @@ public class SimulatorChannel extends AbstractChannel {
 		this.config = config;
 	}
 
+	public SimulatorConfig getConfig() {
+		return config;
+	}
+
 	@Override
 	protected IDestination createDestination(DestinationConfig destination) {
 		SpaceConfig spaceConfig = (SpaceConfig) destination;
@@ -36,11 +40,6 @@ public class SimulatorChannel extends AbstractChannel {
 			}
 		}
 		return new SimulatorDestination(this, spaceConfig, dataFactory);
-	}
-
-	@Override
-	protected boolean isWildcard(DestinationConfig destination) {
-		return destination.getSpace() == null;
 	}
 
 }

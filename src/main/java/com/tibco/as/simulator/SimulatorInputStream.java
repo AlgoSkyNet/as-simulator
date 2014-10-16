@@ -28,10 +28,10 @@ import com.tibco.as.simulator.provider.NameProvider;
 import com.tibco.as.simulator.provider.NowProvider;
 import com.tibco.as.simulator.provider.NumberTextProvider;
 import com.tibco.as.simulator.provider.PrefixProvider;
-import com.tibco.as.simulator.provider.RandomCharsProvider;
-import com.tibco.as.simulator.provider.RandomTextProvider;
-import com.tibco.as.simulator.provider.RandomWordProvider;
-import com.tibco.as.simulator.provider.RandomWordsProvider;
+import com.tibco.as.simulator.provider.StringProvider;
+import com.tibco.as.simulator.provider.TextProvider;
+import com.tibco.as.simulator.provider.WordProvider;
+import com.tibco.as.simulator.provider.WordsProvider;
 import com.tibco.as.simulator.provider.RegexProvider;
 import com.tibco.as.simulator.provider.SequenceProvider;
 import com.tibco.as.simulator.provider.ShortProvider;
@@ -56,13 +56,13 @@ import com.tibco.as.simulator.xml.Prefix;
 import com.tibco.as.simulator.xml.RandomBlob;
 import com.tibco.as.simulator.xml.RandomBoolean;
 import com.tibco.as.simulator.xml.RandomChar;
-import com.tibco.as.simulator.xml.RandomChars;
 import com.tibco.as.simulator.xml.RandomDateTime;
 import com.tibco.as.simulator.xml.RandomDouble;
 import com.tibco.as.simulator.xml.RandomFloat;
 import com.tibco.as.simulator.xml.RandomInteger;
 import com.tibco.as.simulator.xml.RandomLong;
 import com.tibco.as.simulator.xml.RandomShort;
+import com.tibco.as.simulator.xml.RandomString;
 import com.tibco.as.simulator.xml.RandomText;
 import com.tibco.as.simulator.xml.RandomWord;
 import com.tibco.as.simulator.xml.RandomWords;
@@ -86,12 +86,13 @@ public class SimulatorInputStream implements IInputStream {
 
 	@Override
 	public void open() throws Exception {
-		Collection<IValueProvider> list = new ArrayList<IValueProvider>();
+		Collection<IValueProvider> providers = new ArrayList<IValueProvider>();
 		for (com.tibco.as.convert.Field fieldConfig : config.getFields()) {
 			SimulatorFieldConfig field = (SimulatorFieldConfig) fieldConfig;
-			list.add(create(dataFactory, field.getField()));
+			providers.add(getProvider(field.getField()));
 		}
-		this.providers = list.toArray(new IValueProvider[list.size()]);
+		this.providers = providers
+				.toArray(new IValueProvider[providers.size()]);
 		position = 0L;
 	}
 
@@ -137,7 +138,7 @@ public class SimulatorInputStream implements IInputStream {
 		return 0;
 	}
 
-	private IValueProvider create(DataFactory dataFactory, Field field) {
+	private IValueProvider getProvider(Field field) {
 		if (field instanceof RandomBlob)
 			return new BlobProvider((RandomBlob) field);
 		if (field instanceof RandomBoolean)
@@ -182,14 +183,14 @@ public class SimulatorInputStream implements IInputStream {
 			return new NumberTextProvider(dataFactory, (NumberText) field);
 		if (field instanceof Prefix)
 			return new PrefixProvider(dataFactory, (Prefix) field);
-		if (field instanceof RandomChars)
-			return new RandomCharsProvider(dataFactory, (RandomChars) field);
+		if (field instanceof RandomString)
+			return new StringProvider(dataFactory, (RandomString) field);
 		if (field instanceof RandomText)
-			return new RandomTextProvider(dataFactory, (RandomText) field);
+			return new TextProvider(dataFactory, (RandomText) field);
 		if (field instanceof RandomWords)
-			return new RandomWordsProvider(dataFactory, (RandomWords) field);
+			return new WordsProvider(dataFactory, (RandomWords) field);
 		if (field instanceof RandomWord)
-			return new RandomWordProvider(dataFactory, (RandomWord) field);
+			return new WordProvider(dataFactory, (RandomWord) field);
 		if (field instanceof StreetName)
 			return new StreetNameProvider(dataFactory);
 		if (field instanceof Sequence)
