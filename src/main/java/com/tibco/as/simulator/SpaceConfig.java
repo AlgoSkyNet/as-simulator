@@ -6,12 +6,7 @@ public class SpaceConfig extends DestinationConfig {
 
 	private static final long DEFAULT_LIMIT = 100;
 
-	private SimulatorConfig channel;
 	private Long sleep;
-
-	public SpaceConfig(SimulatorConfig channel) {
-		this.channel = channel;
-	}
 
 	public Long getSleep() {
 		return sleep;
@@ -23,7 +18,7 @@ public class SpaceConfig extends DestinationConfig {
 
 	@Override
 	public SpaceConfig clone() {
-		SpaceConfig export = new SpaceConfig(channel);
+		SpaceConfig export = new SpaceConfig();
 		copyTo(export);
 		return export;
 	}
@@ -43,6 +38,9 @@ public class SpaceConfig extends DestinationConfig {
 		Long limit = super.getLimit();
 		if (limit == null) {
 			return DEFAULT_LIMIT;
+		}
+		if (limit.equals(-1L)) {
+			return null;
 		}
 		return limit;
 	}

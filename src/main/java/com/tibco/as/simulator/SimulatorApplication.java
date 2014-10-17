@@ -18,10 +18,12 @@ import com.tibco.as.simulator.xml.Space;
 
 public class SimulatorApplication extends AbstractApplication {
 
+	private final static String DEFAULT_FILEPATH = "simulation.xml";
+
 	@Parameter(names = { "-config" }, description = "XML configuration file")
-	private String config;
-	@Parameter(names = { "-save_config" }, description = "Save XML configuration to file")
-	private boolean saveConfig;
+	private String configFile;
+	@Parameter(names = { "-save" }, description = "Save configuration as XML")
+	private boolean save;
 	@ParametersDelegate
 	private SimulatorCommand command = new SimulatorCommand();
 
@@ -41,49 +43,53 @@ public class SimulatorApplication extends AbstractApplication {
 
 	@Override
 	protected IChannel getChannel(ChannelConfig config) {
-		return new SimulatorChannel((SimulatorConfig) config);
+		SimulatorConfig simulatorConfig = (SimulatorConfig) config;
+		return new SimulatorChannel(simulatorConfig);
 	}
 
 	@Override
 	protected SimulatorConfig getChannelConfig() throws Exception {
-		SimulatorConfig simulatorConfig = new SimulatorConfig();
-		if (config != null) {
-			File file = new File(config);
-			if (file.exists()) {
-				Simulation simulation = JAXB.unmarshal(file, Simulation.class);
-				simulatorConfig.setDataValues(simulation.getDataValues());
-				for (Space space : simulation.getSpace()) {
-					SpaceConfig spaceConfig = (SpaceConfig) simulatorConfig
-							.addDestinationConfig();
-					spaceConfig.setDirection(Direction.IMPORT);
-					spaceConfig.setSpace(space.getName());
-					spaceConfig.setLimit(space.getSize());
-					spaceConfig.setSleep(space.getSleep());
-					for (Field field : space.getFields()) {
-						SimulatorFieldConfig fieldConfig = (SimulatorFieldConfig) spaceConfig
-								.addField();
-						fieldConfig.setField(field);
-						if (field.isKey()) {
-							spaceConfig.getKeys().add(
-									fieldConfig.getFieldName());
-						}
+		SimulatorConfig config = new SimulatorConfig();
+		File file = new File(getConfigFilepath());
+		if (file.exists()) {
+			Simulation simulation = JAXB.unmarshal(file, Simulation.class);
+			config.setDataValues(simulation.getDataValues());
+			for (Space space : simulation.getSpace()) {
+				SpaceConfig spaceConfig = (SpaceConfig) config
+						.addDestinationConfig();
+				spaceConfig.setDirection(Direction.IMPORT);
+				spaceConfig.setSpace(space.getName());
+				spaceConfig.setLimit(space.getSize());
+				spaceConfig.setSleep(space.getSleep());
+				for (Field field : space.getFields()) {
+					SimulatorFieldConfig fieldConfig = (SimulatorFieldConfig) spaceConfig
+							.addField();
+					fieldConfig.setField(field);
+					if (field.isKey()) {
+						spaceConfig.getKeys().add(fieldConfig.getFieldName());
 					}
 				}
 			}
 		}
-		return simulatorConfig;
+		return config;
+	}
+
+	private String getConfigFilepath() {
+		if (configFile == null) {
+			return DEFAULT_FILEPATH;
+		}
+		return configFile;
 	}
 
 	@Override
 	protected void execute(IChannel channel) {
 		super.execute(channel);
-		if (saveConfig) {
+		if (save) {
 			SimulatorChannel simulatorChannel = (SimulatorChannel) channel;
-			SimulatorConfig simulatorConfig = simulatorChannel.getConfig();
+			SimulatorConfig config = simulatorChannel.getConfig();
 			Simulation simulation = new Simulation();
-			simulation.setDataValues(simulatorConfig.getDataValues());
-			for (DestinationConfig destination : simulatorConfig
-					.getDestinations()) {
+			simulation.setDataValues(config.getDataValues());
+			for (DestinationConfig destination : config.getDestinations()) {
 				SpaceConfig spaceConfig = (SpaceConfig) destination;
 				Space space = new Space();
 				space.setName(spaceConfig.getSpace());
@@ -102,7 +108,7 @@ public class SimulatorApplication extends AbstractApplication {
 					space.getFields().add(field);
 				}
 			}
-			JAXB.marshal(simulation, new File(config));
+			JAXB.marshal(simulation, new File(getConfigFilepath()));
 		}
 	}
 

@@ -1,6 +1,7 @@
 package com.tibco.as.io.simulation;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
@@ -75,6 +76,7 @@ public class TestSimulation {
 			FieldType.SHORT).setNullable(true);
 
 	private Metaspace metaspace;
+	private Collection<Space> spaces = new ArrayList<Space>();
 
 	private void execute(String command) throws Exception {
 		SimulatorApplication.main(command.split(" "));
@@ -92,6 +94,7 @@ public class TestSimulation {
 		if (metaspace == null) {
 			return;
 		}
+		spaces.clear();
 		metaspace.closeAll();
 	}
 
@@ -171,8 +174,7 @@ public class TestSimulation {
 		File file = new File(Utils.createTempDirectory(), "saved-config.xml");
 		metaspace.defineSpace(createSpaceDef());
 		Space space = metaspace.getSpace(SPACE_NAME, DistributionRole.SEEDER);
-		execute("-discovery tcp -config " + file.getAbsolutePath()
-				+ " -save_config");
+		execute("-discovery tcp -config " + file.getAbsolutePath() + " -save");
 		Assert.assertTrue(space.size() > 0);
 		Assert.assertTrue(file.exists());
 		Simulation simulation = JAXB.unmarshal(file, Simulation.class);

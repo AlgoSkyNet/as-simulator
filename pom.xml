@@ -194,7 +194,7 @@
           <repositoryName>lib</repositoryName>
           <programs>
             <program>
-              <mainClass>com.tibco.as.simulator.Application</mainClass>
+              <mainClass>com.tibco.as.simulator.SimulatorApplication</mainClass>
               <id>${project.artifactId}</id>
             </program>
           </programs>

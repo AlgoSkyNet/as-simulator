@@ -17,7 +17,6 @@ public class SimulatorConfig extends ChannelConfig {
 
 	@Override
 	protected SpaceConfig newDestinationConfig() {
-		return new SpaceConfig(this);
+		return new SpaceConfig();
 	}
-
 }
