@@ -16,7 +16,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.tibco.as.io.Utils;
 import com.tibco.as.simulator.SimulatorApplication;
 import com.tibco.as.simulator.xml.Field;
 import com.tibco.as.simulator.xml.RandomBoolean;
@@ -40,6 +39,7 @@ import com.tibco.as.space.Space;
 import com.tibco.as.space.SpaceDef;
 import com.tibco.as.space.Tuple;
 import com.tibco.as.space.browser.Browser;
+import com.tibco.as.util.Utils;
 
 public class TestSimulation {
 
