@@ -28,16 +28,16 @@ import com.tibco.as.simulator.provider.NameProvider;
 import com.tibco.as.simulator.provider.NowProvider;
 import com.tibco.as.simulator.provider.NumberTextProvider;
 import com.tibco.as.simulator.provider.PrefixProvider;
-import com.tibco.as.simulator.provider.StringProvider;
-import com.tibco.as.simulator.provider.TextProvider;
-import com.tibco.as.simulator.provider.WordProvider;
-import com.tibco.as.simulator.provider.WordsProvider;
 import com.tibco.as.simulator.provider.RegexProvider;
 import com.tibco.as.simulator.provider.SequenceProvider;
 import com.tibco.as.simulator.provider.ShortProvider;
 import com.tibco.as.simulator.provider.StreetNameProvider;
 import com.tibco.as.simulator.provider.StreetSuffixProvider;
+import com.tibco.as.simulator.provider.StringProvider;
 import com.tibco.as.simulator.provider.SuffixProvider;
+import com.tibco.as.simulator.provider.TextProvider;
+import com.tibco.as.simulator.provider.WordProvider;
+import com.tibco.as.simulator.provider.WordsProvider;
 import com.tibco.as.simulator.xml.Address;
 import com.tibco.as.simulator.xml.AddressLine2;
 import com.tibco.as.simulator.xml.BirthDate;
@@ -78,6 +78,7 @@ public class SimulatorInputStream implements IInputStream {
 	private DataFactory dataFactory;
 	private IValueProvider[] providers;
 	private Long position;
+	private boolean closed;
 
 	public SimulatorInputStream(SpaceConfig config, DataFactory dataFactory) {
 		this.config = config;
@@ -86,34 +87,28 @@ public class SimulatorInputStream implements IInputStream {
 
 	@Override
 	public void open() throws Exception {
-		Collection<IValueProvider> providers = new ArrayList<IValueProvider>();
+		Collection<IValueProvider> provs = new ArrayList<IValueProvider>();
 		for (com.tibco.as.convert.Field fieldConfig : config.getFields()) {
 			SimulatorFieldConfig field = (SimulatorFieldConfig) fieldConfig;
-			providers.add(getProvider(field.getField()));
+			provs.add(getProvider(field.getField()));
 		}
-		this.providers = providers
-				.toArray(new IValueProvider[providers.size()]);
+		providers = provs.toArray(new IValueProvider[provs.size()]);
 		position = 0L;
+		closed = false;
 	}
 
 	@Override
 	public void close() throws Exception {
-		providers = null;
-	}
-
-	@Override
-	public boolean isClosed() {
-		return providers == null;
+		closed = true;
 	}
 
 	@Override
 	public Object[] read() throws Exception {
-		Long sleep = config.getSleep();
-		if (sleep != null) {
-			Thread.sleep(sleep);
-		}
-		if (isClosed()) {
+		if (closed) {
 			return null;
+		}
+		if (config.getSleep() != null) {
+			Thread.sleep(config.getSleep());
 		}
 		Object[] data = new Object[providers.length];
 		for (int i = 0; i < providers.length; i++) {

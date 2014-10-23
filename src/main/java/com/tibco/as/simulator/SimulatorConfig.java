@@ -15,8 +15,4 @@ public class SimulatorConfig extends ChannelConfig {
 		this.dataValues = dataValues;
 	}
 
-	@Override
-	protected SpaceConfig newDestinationConfig() {
-		return new SpaceConfig();
-	}
 }

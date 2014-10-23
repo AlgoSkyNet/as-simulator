@@ -1,10 +1,11 @@
 package com.tibco.as.simulator;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.beust.jcommander.Parameter;
-import com.tibco.as.io.ChannelConfig;
+import com.tibco.as.io.DestinationConfig;
 import com.tibco.as.io.cli.AbstractImportCommand;
 
 public class SimulatorCommand extends AbstractImportCommand {
@@ -13,10 +14,17 @@ public class SimulatorCommand extends AbstractImportCommand {
 	private List<String> spaceNames = new ArrayList<String>();
 
 	@Override
-	public void configure(ChannelConfig config) throws Exception {
+	protected void populate(Collection<DestinationConfig> destinations) {
 		for (String spaceName : spaceNames) {
-			config.addDestinationConfig().setSpace(spaceName);
+			SpaceConfig spaceConfig = newDestination();
+			spaceConfig.setSpace(spaceName);
+			destinations.add(spaceConfig);
 		}
-		super.configure(config);
 	}
+
+	@Override
+	protected SpaceConfig newDestination() {
+		return new SpaceConfig();
+	}
+
 }

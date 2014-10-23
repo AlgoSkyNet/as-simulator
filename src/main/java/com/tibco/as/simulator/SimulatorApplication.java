@@ -55,8 +55,7 @@ public class SimulatorApplication extends AbstractApplication {
 			Simulation simulation = JAXB.unmarshal(file, Simulation.class);
 			config.setDataValues(simulation.getDataValues());
 			for (Space space : simulation.getSpace()) {
-				SpaceConfig spaceConfig = (SpaceConfig) config
-						.addDestinationConfig();
+				SpaceConfig spaceConfig = new SpaceConfig();
 				spaceConfig.setDirection(Direction.IMPORT);
 				spaceConfig.setSpace(space.getName());
 				spaceConfig.setLimit(space.getSize());
@@ -69,6 +68,7 @@ public class SimulatorApplication extends AbstractApplication {
 						spaceConfig.getKeys().add(fieldConfig.getFieldName());
 					}
 				}
+				config.getDestinations().add(spaceConfig);
 			}
 		}
 		return config;
