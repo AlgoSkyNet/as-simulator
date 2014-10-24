@@ -29,8 +29,8 @@ public class SpaceConfig extends DestinationConfig {
 	}
 
 	@Override
-	protected SimulatorFieldConfig newField() {
-		return new SimulatorFieldConfig();
+	protected SimulatorField newField() {
+		return new SimulatorField();
 	}
 
 	@Override

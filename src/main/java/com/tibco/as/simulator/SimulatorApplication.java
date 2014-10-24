@@ -61,7 +61,7 @@ public class SimulatorApplication extends AbstractApplication {
 				spaceConfig.setLimit(space.getSize());
 				spaceConfig.setSleep(space.getSleep());
 				for (Field field : space.getFields()) {
-					SimulatorFieldConfig fieldConfig = (SimulatorFieldConfig) spaceConfig
+					SimulatorField fieldConfig = (SimulatorField) spaceConfig
 							.addField();
 					fieldConfig.setField(field);
 					if (field.isKey()) {
@@ -98,7 +98,7 @@ public class SimulatorApplication extends AbstractApplication {
 				simulation.getSpace().add(space);
 				for (com.tibco.as.convert.Field fieldConfig : destination
 						.getFields()) {
-					SimulatorFieldConfig simulatorField = (SimulatorFieldConfig) fieldConfig;
+					SimulatorField simulatorField = (SimulatorField) fieldConfig;
 					Field field = simulatorField.getField();
 					field.setFieldName(simulatorField.getFieldName());
 					if (spaceConfig.getKeys().contains(

@@ -3,14 +3,14 @@ package com.tibco.as.simulator.provider;
 import org.fluttercode.datafactory.impl.DataFactory;
 
 import com.tibco.as.simulator.IValueProvider;
-import com.tibco.as.simulator.xml.RandomWord;
+import com.tibco.as.simulator.xml.Word;
 
 public class WordProvider implements IValueProvider {
 
 	private DataFactory df;
-	private RandomWord field;
+	private Word field;
 
-	public WordProvider(DataFactory df, RandomWord field) {
+	public WordProvider(DataFactory df, Word field) {
 		this.df = df;
 		this.field = field;
 	}

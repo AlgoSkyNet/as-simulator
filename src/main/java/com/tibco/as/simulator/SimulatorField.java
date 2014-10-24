@@ -25,30 +25,30 @@ import com.tibco.as.simulator.xml.RandomInteger;
 import com.tibco.as.simulator.xml.RandomLong;
 import com.tibco.as.simulator.xml.RandomShort;
 import com.tibco.as.simulator.xml.RandomString;
-import com.tibco.as.simulator.xml.RandomText;
-import com.tibco.as.simulator.xml.RandomWord;
-import com.tibco.as.simulator.xml.RandomWords;
 import com.tibco.as.simulator.xml.Regex;
 import com.tibco.as.simulator.xml.Sequence;
 import com.tibco.as.simulator.xml.StreetName;
 import com.tibco.as.simulator.xml.StreetSuffix;
 import com.tibco.as.simulator.xml.Suffix;
+import com.tibco.as.simulator.xml.Text;
+import com.tibco.as.simulator.xml.Word;
+import com.tibco.as.simulator.xml.Words;
 import com.tibco.as.space.FieldDef.FieldType;
 
-public class SimulatorFieldConfig extends com.tibco.as.convert.Field {
+public class SimulatorField extends com.tibco.as.convert.Field {
 
 	private Field field;
 
 	@Override
-	public SimulatorFieldConfig clone() {
-		SimulatorFieldConfig clone = new SimulatorFieldConfig();
+	public SimulatorField clone() {
+		SimulatorField clone = new SimulatorField();
 		copyTo(clone);
 		return clone;
 	}
 
 	@Override
 	public void copyTo(com.tibco.as.convert.Field fieldConfig) {
-		SimulatorFieldConfig target = (SimulatorFieldConfig) fieldConfig;
+		SimulatorField target = (SimulatorField) fieldConfig;
 		target.field = field;
 		super.copyTo(target);
 	}
@@ -155,11 +155,11 @@ public class SimulatorFieldConfig extends com.tibco.as.convert.Field {
 			return java.lang.String.class;
 		else if (field instanceof RandomString)
 			return java.lang.String.class;
-		else if (field instanceof RandomText)
+		else if (field instanceof Text)
 			return java.lang.String.class;
-		else if (field instanceof RandomWord)
+		else if (field instanceof Word)
 			return java.lang.String.class;
-		else if (field instanceof RandomWords)
+		else if (field instanceof Words)
 			return java.lang.String.class;
 		else if (field instanceof Sequence)
 			return java.lang.Long.class;

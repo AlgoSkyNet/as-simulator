@@ -77,9 +77,9 @@
       <xsd:element name="now" type="now" />
       <xsd:element name="item" type="item" />
       <xsd:element name="name" type="name" />
-      <xsd:element name="randomText" type="randomText" />
-      <xsd:element name="randomWord" type="randomWord" />
-      <xsd:element name="randomWords" type="randomWords" />
+      <xsd:element name="text" type="text" />
+      <xsd:element name="word" type="word" />
+      <xsd:element name="words" type="words" />
       <xsd:element name="firstName" type="firstName" />
       <xsd:element name="lastName" type="lastName" />
       <xsd:element name="prefix" type="prefix" />
@@ -324,7 +324,7 @@
     </xsd:restriction>
   </xsd:simpleType>
 
-  <xsd:complexType name="randomText">
+  <xsd:complexType name="text">
     <xsd:complexContent>
       <xsd:extension base="field">
         <xsd:attribute name="length" type="xsd:int" />
@@ -336,7 +336,7 @@
     </xsd:complexContent>
   </xsd:complexType>
 
-  <xsd:complexType name="randomWord">
+  <xsd:complexType name="word">
     <xsd:complexContent>
       <xsd:extension base="field">
         <xsd:attribute name="length" type="xsd:int" />
@@ -348,9 +348,9 @@
     </xsd:complexContent>
   </xsd:complexType>
 
-  <xsd:complexType name="randomWords">
+  <xsd:complexType name="words">
     <xsd:complexContent>
-      <xsd:extension base="randomWord">
+      <xsd:extension base="word">
         <xsd:attribute name="minCount" type="xsd:int"
           default="1" />
         <xsd:attribute name="maxCount" type="xsd:int"

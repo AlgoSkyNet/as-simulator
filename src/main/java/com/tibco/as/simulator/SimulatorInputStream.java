@@ -63,14 +63,14 @@ import com.tibco.as.simulator.xml.RandomInteger;
 import com.tibco.as.simulator.xml.RandomLong;
 import com.tibco.as.simulator.xml.RandomShort;
 import com.tibco.as.simulator.xml.RandomString;
-import com.tibco.as.simulator.xml.RandomText;
-import com.tibco.as.simulator.xml.RandomWord;
-import com.tibco.as.simulator.xml.RandomWords;
 import com.tibco.as.simulator.xml.Regex;
 import com.tibco.as.simulator.xml.Sequence;
 import com.tibco.as.simulator.xml.StreetName;
 import com.tibco.as.simulator.xml.StreetSuffix;
 import com.tibco.as.simulator.xml.Suffix;
+import com.tibco.as.simulator.xml.Text;
+import com.tibco.as.simulator.xml.Word;
+import com.tibco.as.simulator.xml.Words;
 
 public class SimulatorInputStream implements IInputStream {
 
@@ -89,7 +89,7 @@ public class SimulatorInputStream implements IInputStream {
 	public void open() throws Exception {
 		Collection<IValueProvider> provs = new ArrayList<IValueProvider>();
 		for (com.tibco.as.convert.Field fieldConfig : config.getFields()) {
-			SimulatorFieldConfig field = (SimulatorFieldConfig) fieldConfig;
+			SimulatorField field = (SimulatorField) fieldConfig;
 			provs.add(getProvider(field.getField()));
 		}
 		providers = provs.toArray(new IValueProvider[provs.size()]);
@@ -180,12 +180,12 @@ public class SimulatorInputStream implements IInputStream {
 			return new PrefixProvider(dataFactory, (Prefix) field);
 		if (field instanceof RandomString)
 			return new StringProvider(dataFactory, (RandomString) field);
-		if (field instanceof RandomText)
-			return new TextProvider(dataFactory, (RandomText) field);
-		if (field instanceof RandomWords)
-			return new WordsProvider(dataFactory, (RandomWords) field);
-		if (field instanceof RandomWord)
-			return new WordProvider(dataFactory, (RandomWord) field);
+		if (field instanceof Text)
+			return new TextProvider(dataFactory, (Text) field);
+		if (field instanceof Words)
+			return new WordsProvider(dataFactory, (Words) field);
+		if (field instanceof Word)
+			return new WordProvider(dataFactory, (Word) field);
 		if (field instanceof StreetName)
 			return new StreetNameProvider(dataFactory);
 		if (field instanceof Sequence)
