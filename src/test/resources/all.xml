@@ -74,18 +74,15 @@
     <now />
     <numberText digits="4" />
     <prefix chance="30" />
-    <randomChars case="upper" minLength="5" maxLength="10" />
-    <randomChars fieldName="RandomChars2" case="mixed"
-      length="3" />
-    <randomText minLength="2" maxLength="10" />
-    <randomText fieldName="RandomText2" length="5" />
-    <randomWord exactLength="true" length="9" />
-    <randomWord fieldName="RandomWord2" minLength="4"
-      maxLength="10" />
-    <randomWords exactLength="true" length="12" minCount="2"
-      maxCount="4" />
-    <randomWords fieldName="RandomWords2" minLength="3"
-      maxLength="10" minCount="2" maxCount="4" />
+    <string case="upper" minLength="5" maxLength="10" />
+    <string fieldName="RandomChars2" case="mixed" length="3" />
+    <text minLength="2" maxLength="10" />
+    <text fieldName="RandomText2" length="5" />
+    <word exactLength="true" length="9" />
+    <word fieldName="RandomWord2" minLength="4" maxLength="10" />
+    <words exactLength="true" length="12" minCount="2" maxCount="4" />
+    <words fieldName="RandomWords2" minLength="3" maxLength="10"
+      minCount="2" maxCount="4" />
     <regex regex="[2-9][0-9]{2}-[0-9]{3}-[0-9]{4}" />
     <sequence start="1" end="99" />
     <short min="2" max="31" />
