@@ -2,31 +2,54 @@ package com.tibco.as.simulator;
 
 import org.fluttercode.datafactory.impl.DataFactory;
 
-import com.tibco.as.io.AbstractDestination;
-import com.tibco.as.io.IInputStream;
+import com.tibco.as.io.Destination;
 import com.tibco.as.io.IOutputStream;
 import com.tibco.as.simulator.xml.DataValues;
+import com.tibco.as.space.ASException;
 import com.tibco.as.space.Metaspace;
 
-public class SimulatorDestination extends AbstractDestination {
+public class SimulatorDestination extends Destination {
 
+	private static final long DEFAULT_LIMIT = 100;
+
+	private Long sleep;
 	private SimulatorChannel channel;
-	private SpaceConfig config;
 
-	protected SimulatorDestination(SimulatorChannel channel, SpaceConfig config) {
-		super(channel, config);
+	public SimulatorDestination(SimulatorChannel channel) {
+		super(channel);
 		this.channel = channel;
-		this.config = config;
+	}
+
+	public Long getSleep() {
+		return sleep;
+	}
+
+	public void setSleep(Long sleep) {
+		this.sleep = sleep;
 	}
 
 	@Override
-	protected IInputStream getImportInputStream() throws Exception {
-		if (config.getFields().isEmpty()) {
-			Metaspace metaspace = channel.getMetaspace();
-			config.setSpaceDef(metaspace.getSpaceDef(config.getSpace()));
+	protected SimulatorField newField() {
+		return new SimulatorField();
+	}
+
+	@Override
+	public void copyTo(Destination target) {
+		SimulatorDestination destination = (SimulatorDestination) target;
+		if (destination.sleep == null) {
+			destination.sleep = sleep;
+		}
+		super.copyTo(destination);
+	}
+
+	@Override
+	public SimulatorInputStream getInputStream() throws ASException {
+		if (getFields().isEmpty()) {
+			Metaspace metaspace = getChannel().getMetaspace();
+			setSpaceDef(metaspace.getSpaceDef(getSpace()));
 		}
 		DataFactory dataFactory = new DataFactory();
-		DataValues dataValues = channel.getConfig().getDataValues();
+		DataValues dataValues = channel.getDataValues();
 		if (dataValues != null) {
 			if (dataValues.getAddresses() != null) {
 				dataFactory.setAddressDataValues(new CustomAddressDataValues(
@@ -41,21 +64,24 @@ public class SimulatorDestination extends AbstractDestination {
 						dataValues.getNames()));
 			}
 		}
-		return new SimulatorInputStream(config, dataFactory);
+		return new SimulatorInputStream(this, dataFactory);
 	}
 
 	@Override
-	protected IOutputStream getExportOutputStream() throws Exception {
+	public IOutputStream getOutputStream() {
 		return null;
 	}
 
 	@Override
-	protected Class<?> getComponentType() {
-		return Object.class;
-	}
-
-	public SpaceConfig getSpaceConfig() {
-		return config;
+	public Long getImportLimit() {
+		Long limit = super.getImportLimit();
+		if (limit == null) {
+			return DEFAULT_LIMIT;
+		}
+		if (limit.equals(-1L)) {
+			return null;
+		}
+		return limit;
 	}
 
 }

@@ -174,7 +174,8 @@ public class TestSimulation {
 		File file = new File(Utils.createTempDirectory(), "saved-config.xml");
 		metaspace.defineSpace(createSpaceDef());
 		Space space = metaspace.getSpace(SPACE_NAME, DistributionRole.SEEDER);
-		execute("-discovery tcp -config " + file.getAbsolutePath() + " -save");
+		execute("-discovery tcp -config " + file.getAbsolutePath()
+				+ " -save_config");
 		Assert.assertTrue(space.size() > 0);
 		Assert.assertTrue(file.exists());
 		Simulation simulation = JAXB.unmarshal(file, Simulation.class);

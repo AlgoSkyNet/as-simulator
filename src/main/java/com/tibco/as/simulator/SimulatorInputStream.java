@@ -74,41 +74,42 @@ import com.tibco.as.simulator.xml.Words;
 
 public class SimulatorInputStream implements IInputStream {
 
-	private SpaceConfig config;
+	private SimulatorDestination destination;
 	private DataFactory dataFactory;
 	private IValueProvider[] providers;
 	private Long position;
-	private boolean closed;
+	private boolean open;
 
-	public SimulatorInputStream(SpaceConfig config, DataFactory dataFactory) {
-		this.config = config;
+	public SimulatorInputStream(SimulatorDestination config,
+			DataFactory dataFactory) {
+		this.destination = config;
 		this.dataFactory = dataFactory;
 	}
 
 	@Override
-	public void open() throws Exception {
+	public synchronized void open() throws Exception {
 		Collection<IValueProvider> provs = new ArrayList<IValueProvider>();
-		for (com.tibco.as.convert.Field fieldConfig : config.getFields()) {
+		for (com.tibco.as.io.Field fieldConfig : destination.getFields()) {
 			SimulatorField field = (SimulatorField) fieldConfig;
 			provs.add(getProvider(field.getField()));
 		}
 		providers = provs.toArray(new IValueProvider[provs.size()]);
 		position = 0L;
-		closed = false;
+		open = true;
 	}
 
 	@Override
-	public void close() throws Exception {
-		closed = true;
+	public synchronized void close() throws Exception {
+		open = false;
 	}
 
 	@Override
 	public Object[] read() throws Exception {
-		if (closed) {
+		if (!open) {
 			return null;
 		}
-		if (config.getSleep() != null) {
-			Thread.sleep(config.getSleep());
+		if (destination.getSleep() != null) {
+			Thread.sleep(destination.getSleep());
 		}
 		Object[] data = new Object[providers.length];
 		for (int i = 0; i < providers.length; i++) {

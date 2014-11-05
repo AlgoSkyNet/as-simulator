@@ -35,7 +35,7 @@ import com.tibco.as.simulator.xml.Word;
 import com.tibco.as.simulator.xml.Words;
 import com.tibco.as.space.FieldDef.FieldType;
 
-public class SimulatorField extends com.tibco.as.convert.Field {
+public class SimulatorField extends com.tibco.as.io.Field {
 
 	private Field field;
 
@@ -47,7 +47,7 @@ public class SimulatorField extends com.tibco.as.convert.Field {
 	}
 
 	@Override
-	public void copyTo(com.tibco.as.convert.Field fieldConfig) {
+	public void copyTo(com.tibco.as.io.Field fieldConfig) {
 		SimulatorField target = (SimulatorField) fieldConfig;
 		target.field = field;
 		super.copyTo(target);
