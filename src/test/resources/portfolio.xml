@@ -4,20 +4,20 @@
   xsi:noNamespaceSchemaLocation="http://as.tibco.com/simulator.xsd">
 
   <space name="customer" size="1000">
-    <sequence fieldName="id" key="true" />
-    <firstName fieldName="firstName" />
-    <lastName fieldName="lastName" />
-    <address fieldName="address" />
-    <birthDate fieldName="dob" />
-    <regex fieldName="phone" regex="[2-9][0-9]{2}-[0-9]{3}-[0-9]{4}" />
-    <emailAddress fieldName="email" />
-    <words fieldName="notes" />
-    <city fieldName="city" />
-    <now fieldName="creationTime" />
+    <sequence field="id" key="true" />
+    <firstName field="firstName" />
+    <lastName field="lastName" />
+    <address field="address" />
+    <birthDate field="dob" />
+    <regex field="phone" regex="[2-9][0-9]{2}-[0-9]{3}-[0-9]{4}" />
+    <emailAddress field="email" />
+    <words field="notes" />
+    <city field="city" />
+    <now field="creationTime" />
   </space>
 
   <space name="quote" sleep="1000">
-    <item fieldName="ticker" key="true">
+    <item field="ticker" key="true">
       <value xsi:type="xsd:string">TIBX</value>
       <value xsi:type="xsd:string">GOOG</value>
       <value xsi:type="xsd:string">WFM</value>
@@ -32,27 +32,27 @@
       <value xsi:type="xsd:string">VIAB</value>
       <value xsi:type="xsd:string">FB</value>
     </item>
-    <boolean fieldName="owned" />
-    <now fieldName="time" />
-    <double fieldName="bid" min="0" max="1000" decimals="2" />
-    <double fieldName="ask" min="0" max="1000" decimals="2" />
-    <integer fieldName="bidSize" min="0" max="1000" />
-    <integer fieldName="askSize" min="0" max="1000" />
-    <double fieldName="lastSale" min="0" max="1000" decimals="2" />
-    <integer fieldName="lastSize" min="0" max="1000" />
-    <dateTime fieldName="tradeTime" start="2013-10-15T07:20:00-05:00"
+    <boolean field="owned" />
+    <now field="time" />
+    <double field="bid" min="0" max="1000" decimals="2" />
+    <double field="ask" min="0" max="1000" decimals="2" />
+    <integer field="bidSize" min="0" max="1000" />
+    <integer field="askSize" min="0" max="1000" />
+    <double field="lastSale" min="0" max="1000" decimals="2" />
+    <integer field="lastSize" min="0" max="1000" />
+    <dateTime field="tradeTime" start="2013-10-15T07:20:00-05:00"
       end="2013-10-15T17:20:00-05:00" />
-    <item fieldName="exchange">
+    <item field="exchange">
       <value xsi:type="xsd:string">NYSE</value>
       <value xsi:type="xsd:string">NASDAQ</value>
       <value xsi:type="xsd:string">AMEX</value>
     </item>
-    <integer fieldName="volume" min="0" max="10000" />
+    <integer field="volume" min="0" max="10000" />
   </space>
 
   <space name="position" size="100000">
-    <integer fieldName="portfolioId" key="true" min="1" max="100000" />
-    <item fieldName="ticker" key="true">
+    <integer field="portfolioId" key="true" min="1" max="100000" />
+    <item field="ticker" key="true">
       <value xsi:type="xsd:string">TIBX</value>
       <value xsi:type="xsd:string">GOOG</value>
       <value xsi:type="xsd:string">WFM</value>
@@ -67,8 +67,8 @@
       <value xsi:type="xsd:string">VIAB</value>
       <value xsi:type="xsd:string">FB</value>
     </item>
-    <integer fieldName="customerId" min="0" max="1000" />
-    <integer fieldName="quantity" max="1000" />
+    <integer field="customerId" min="0" max="1000" />
+    <integer field="quantity" max="1000" />
   </space>
 
 </simulation>

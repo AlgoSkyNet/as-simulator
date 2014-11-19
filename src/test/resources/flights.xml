@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simulation  xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="http://as.tibco.com/simulator.xsd">
+  <space name="FlightSector" size="1000000">
+    <sequence fieldName="FlightNumber" key="true" />
+    <dateTime fieldName="OperationDate" key="true" dateOnly="true" />
+    <item fieldName="Origin" probability="80">
+      <default xsi:type="xsd:string">DXB</default>
+      <value xsi:type="xsd:string">LAX</value>
+      <value xsi:type="xsd:string">LHR</value>
+      <value xsi:type="xsd:string">CDG</value>
+      <value xsi:type="xsd:string">BOM</value>
+      <value xsi:type="xsd:string">TRV</value>
+    </item>
+    <item fieldName="Destination" probability="80">
+      <default xsi:type="xsd:string">DXB</default>
+      <value xsi:type="xsd:string">LAX</value>
+      <value xsi:type="xsd:string">LHR</value>
+      <value xsi:type="xsd:string">CDG</value>
+      <value xsi:type="xsd:string">BOM</value>
+      <value xsi:type="xsd:string">TRV</value>
+    </item>
+    <item fieldName="FlightStatus" probability="50">
+      <default xsi:type="xsd:string"></default>
+      <value xsi:type="xsd:string">FO</value>
+      <value xsi:type="xsd:string">FF</value>
+      <value xsi:type="xsd:string">FC</value>
+      <value xsi:type="xsd:string">PD</value>
+    </item>
+  </space>
+</simulation>

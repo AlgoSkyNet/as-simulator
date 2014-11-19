@@ -99,7 +99,7 @@
   </xsd:complexType>
 
   <xsd:complexType name="field">
-    <xsd:attribute name="fieldName" type="xsd:string" />
+    <xsd:attribute name="field" type="xsd:string" />
     <xsd:attribute name="key" type="xsd:boolean" default="false" />
   </xsd:complexType>
 

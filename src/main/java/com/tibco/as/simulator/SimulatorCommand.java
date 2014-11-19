@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.beust.jcommander.Parameter;
-import com.tibco.as.io.Channel;
-import com.tibco.as.io.ChannelImport;
+import com.tibco.as.io.ChannelTransfer;
+import com.tibco.as.io.IChannel;
 import com.tibco.as.io.cli.ImportCommand;
+import com.tibco.as.util.Utils;
 
 public class SimulatorCommand extends ImportCommand {
 
@@ -14,13 +15,21 @@ public class SimulatorCommand extends ImportCommand {
 	private List<String> spaceNames = new ArrayList<String>();
 
 	@Override
-	public ChannelImport getTransfer(Channel channel) throws Exception {
-		SimulatorChannel simChannel = (SimulatorChannel) channel;
-		for (String spaceName : spaceNames) {
-			SimulatorDestination destination = simChannel.addDestination();
-			destination.setSpace(spaceName);
+	public ChannelTransfer getTransfer(IChannel channel) throws Exception {
+		for (String pattern : spaceNames) {
+			for (String spaceName : channel.getMetaspace().getUserSpaceNames()) {
+				if (Utils.matches(spaceName, pattern, false)) {
+					SimulatorDestination destination = createDestination(channel);
+					destination.getSpaceDef().setName(spaceName);
+					channel.getDestinations().add(destination);
+				}
+			}
 		}
 		return super.getTransfer(channel);
 	}
 
+	@Override
+	protected SimulatorDestination createDestination(IChannel channel) {
+		return new SimulatorDestination((SimulatorChannel) channel);
+	}
 }

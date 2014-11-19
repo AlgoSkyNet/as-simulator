@@ -2,15 +2,15 @@
 <simulation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:noNamespaceSchemaLocation="http://as.tibco.com/simulator.xsd">
   <space name="customer" size="100">
-    <sequence fieldName="id" key="true" />
-    <firstName fieldName="firstName" />
-    <lastName fieldName="lastName" />
-    <address fieldName="address" />
-    <birthDate fieldName="dob" />
-    <regex fieldName="phone" regex="[2-9][0-9]{2}-[0-9]{3}-[0-9]{4}" />
-    <emailAddress fieldName="email" />
-    <words fieldName="notes" />
-    <city fieldName="city" />
-    <now fieldName="creationTime" />
+    <sequence field="id" key="true" />
+    <firstName field="firstName" />
+    <lastName field="lastName" />
+    <address field="address" />
+    <birthDate field="dob" />
+    <regex field="phone" regex="[2-9][0-9]{2}-[0-9]{3}-[0-9]{4}" />
+    <emailAddress field="email" />
+    <words field="notes" />
+    <city field="city" />
+    <now field="creationTime" />
   </space>
 </simulation>

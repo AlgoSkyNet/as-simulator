@@ -175,7 +175,7 @@ public class TestSimulation {
 		metaspace.defineSpace(createSpaceDef());
 		Space space = metaspace.getSpace(SPACE_NAME, DistributionRole.SEEDER);
 		execute("-discovery tcp -config " + file.getAbsolutePath()
-				+ " -save_config");
+				+ " -save_config *");
 		Assert.assertTrue(space.size() > 0);
 		Assert.assertTrue(file.exists());
 		Simulation simulation = JAXB.unmarshal(file, Simulation.class);
@@ -186,15 +186,15 @@ public class TestSimulation {
 		Assert.assertEquals(SPACE_NAME, xmlSpace.getName());
 		Assert.assertEquals(10, fields.size());
 		Field field1 = fields.get(0);
-		Assert.assertEquals(FIELD_NAME1, field1.getFieldName());
+		Assert.assertEquals(FIELD_NAME1, field1.getField());
 		Assert.assertTrue(field1.isKey());
 		Assert.assertEquals(RandomLong.class, field1.getClass());
 		Field field2 = fields.get(1);
-		Assert.assertEquals(FIELD_NAME2, field2.getFieldName());
+		Assert.assertEquals(FIELD_NAME2, field2.getField());
 		Assert.assertEquals(RandomString.class, field2.getClass());
 		Assert.assertTrue(field2.isKey());
 		Field field3 = fields.get(2);
-		Assert.assertEquals(FIELD_NAME3, field3.getFieldName());
+		Assert.assertEquals(FIELD_NAME3, field3.getField());
 		Assert.assertEquals(RandomDateTime.class, field3.getClass());
 		Assert.assertFalse(field3.isKey());
 		Assert.assertEquals(RandomBoolean.class, fields.get(4).getClass());

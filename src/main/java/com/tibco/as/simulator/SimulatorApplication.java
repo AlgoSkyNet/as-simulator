@@ -2,10 +2,9 @@ package com.tibco.as.simulator;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParametersDelegate;
-import com.tibco.as.io.cli.AbstractApplication;
-import com.tibco.as.io.cli.ICommand;
+import com.tibco.as.io.cli.Application;
 
-public class SimulatorApplication extends AbstractApplication {
+public class SimulatorApplication extends Application {
 
 	@Parameter(names = { "-config" }, description = "XML configuration file")
 	private String configPath;
@@ -24,13 +23,13 @@ public class SimulatorApplication extends AbstractApplication {
 	}
 
 	@Override
-	protected ICommand getDefaultCommand() {
+	protected SimulatorCommand getDefaultCommand() {
 		return command;
 	}
 
 	@Override
-	protected SimulatorChannel getChannel() {
-		SimulatorChannel channel = new SimulatorChannel();
+	protected SimulatorChannel getChannel(String metaspaceName) {
+		SimulatorChannel channel = new SimulatorChannel(metaspaceName);
 		channel.setSaveConfig(saveConfig);
 		channel.setConfigPath(configPath);
 		return channel;
