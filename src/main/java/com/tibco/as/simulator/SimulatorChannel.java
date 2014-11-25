@@ -22,10 +22,6 @@ public class SimulatorChannel extends Channel {
 	private Boolean saveConfig;
 	private Simulation simulation;
 
-	public SimulatorChannel(String metaspaceName) {
-		super(metaspaceName);
-	}
-
 	@Override
 	public void open() throws Exception {
 		loadConfig();

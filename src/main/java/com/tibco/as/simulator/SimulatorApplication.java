@@ -28,8 +28,8 @@ public class SimulatorApplication extends Application {
 	}
 
 	@Override
-	protected SimulatorChannel getChannel(String metaspaceName) {
-		SimulatorChannel channel = new SimulatorChannel(metaspaceName);
+	protected SimulatorChannel getChannel() {
+		SimulatorChannel channel = new SimulatorChannel();
 		channel.setSaveConfig(saveConfig);
 		channel.setConfigPath(configPath);
 		return channel;
