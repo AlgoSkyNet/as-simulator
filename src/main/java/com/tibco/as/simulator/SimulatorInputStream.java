@@ -3,12 +3,15 @@ package com.tibco.as.simulator;
 import com.tibco.as.io.IInputStream;
 import com.tibco.as.space.SpaceDef;
 
-public class SimulatorInputStream implements IInputStream {
+public class SimulatorInputStream implements IInputStream<Object[]> {
+
+	private static final long DEFAULT_SIZE = 100;
 
 	private SimulatorDestination destination;
 	private IValueProvider[] providers;
-	private Long position;
+	private long position;
 	private boolean open;
+	private Long size;
 
 	public SimulatorInputStream(SimulatorDestination destination) {
 		this.destination = destination;
@@ -23,8 +26,20 @@ public class SimulatorInputStream implements IInputStream {
 			destination.setSpaceDef(spaceDef);
 		}
 		providers = destination.getValueProviders();
+		size = getSize();
 		position = 0L;
 		open = true;
+	}
+
+	private Long getSize() {
+		if (destination.getSpace().getSize() == null) {
+			return DEFAULT_SIZE;
+		}
+		long size = destination.getSpace().getSize();
+		if (size == -1) {
+			return null;
+		}
+		return size;
 	}
 
 	@Override
@@ -35,6 +50,9 @@ public class SimulatorInputStream implements IInputStream {
 	@Override
 	public Object[] read() throws Exception {
 		if (!open) {
+			return null;
+		}
+		if (!underLimit()) {
 			return null;
 		}
 		if (destination.getSpace().getSleep() != null) {
@@ -48,19 +66,26 @@ public class SimulatorInputStream implements IInputStream {
 		return data;
 	}
 
+	private boolean underLimit() {
+		if (size == null) {
+			return true;
+		}
+		return position < size;
+	}
+
 	@Override
 	public Long size() {
 		return null;
 	}
 
 	@Override
-	public Long getPosition() {
+	public long getPosition() {
 		return position;
 	}
 
 	@Override
-	public long getOpenTime() {
-		return 0;
+	public String getName() {
+		return destination.getSpace().getName();
 	}
 
 }

@@ -26,9 +26,8 @@ public class BlobProvider implements IValueProvider {
 		if (field.getSize() == null) {
 			return field.getMinSize()
 					+ random.nextInt(field.getMaxSize() - field.getMinSize());
-		} else {
-			return field.getSize();
 		}
+		return field.getSize();
 	}
 
 }

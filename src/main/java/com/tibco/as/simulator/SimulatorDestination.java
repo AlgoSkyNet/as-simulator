@@ -2,12 +2,14 @@ package com.tibco.as.simulator;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.fluttercode.datafactory.impl.DataFactory;
 
-import com.tibco.as.io.Destination;
-import com.tibco.as.io.IInputStream;
-import com.tibco.as.io.ImportConfig;
+import com.tibco.as.io.AbstractDestination;
+import com.tibco.as.io.ArrayInputStreamAdapter;
+import com.tibco.as.io.IOutputStream;
+import com.tibco.as.io.IStreamAdapter;
 import com.tibco.as.simulator.provider.AddressLine2Provider;
 import com.tibco.as.simulator.provider.AddressProvider;
 import com.tibco.as.simulator.provider.BirthDateProvider;
@@ -77,22 +79,32 @@ import com.tibco.as.simulator.xml.Words;
 import com.tibco.as.space.FieldDef;
 import com.tibco.as.space.FieldDef.FieldType;
 import com.tibco.as.space.SpaceDef;
+import com.tibco.as.space.Tuple;
 import com.tibco.as.util.convert.ConverterFactory;
 
-public class SimulatorDestination extends Destination {
+public class SimulatorDestination extends AbstractDestination<Object[]> {
 
 	private SimulatorChannel channel;
-	private Space space;
-	private SimulatorImportConfig importConfig = new SimulatorImportConfig(this);
-
-	public SimulatorDestination(SimulatorChannel channel, Space space) {
-		super(channel);
-		this.channel = channel;
-		this.space = space;
-	}
+	private Space space = new Space();
 
 	public SimulatorDestination(SimulatorChannel channel) {
-		this(channel, new Space());
+		super(channel);
+		this.channel = channel;
+	}
+
+	@Override
+	public String[] getFieldNames() {
+		List<Field> fields = space.getFields();
+		if (fields.isEmpty()) {
+			return super.getFieldNames();
+		}
+		String[] allFieldNames = super.getFieldNames();
+		String[] fieldNames = new String[fields.size()];
+		for (int index = 0; index < fields.size(); index++) {
+			String field = fields.get(index).getField();
+			fieldNames[index] = field == null ? allFieldNames[index] : field;
+		}
+		return fieldNames;
 	}
 
 	public Space getSpace() {
@@ -101,11 +113,6 @@ public class SimulatorDestination extends Destination {
 
 	public void setSpace(Space space) {
 		this.space = space;
-	}
-
-	@Override
-	public ImportConfig getImportConfig() {
-		return importConfig;
 	}
 
 	public static void copy(Space source, Space target) {
@@ -129,7 +136,7 @@ public class SimulatorDestination extends Destination {
 	}
 
 	@Override
-	public IInputStream getInputStream() {
+	protected SimulatorInputStream getInputStream() {
 		return new SimulatorInputStream(this);
 	}
 
@@ -224,15 +231,6 @@ public class SimulatorDestination extends Destination {
 			return field.getClass().getSimpleName();
 		}
 		return fieldName;
-	}
-
-	@Override
-	protected Class<?> getJavaType(FieldDef fieldDef) {
-		Field field = getFieldByFieldName(fieldDef.getName());
-		if (field == null) {
-			return getJavaType(getField(fieldDef.getType()));
-		}
-		return getJavaType(field);
 	}
 
 	private Class<?> getJavaType(Field field) {
@@ -382,6 +380,27 @@ public class SimulatorDestination extends Destination {
 
 	private DataFactory getDataFactory() {
 		return channel.getDataFactory();
+	}
+
+	@Override
+	protected IOutputStream<Object[]> getOutputStream() {
+		throw new UnsupportedOperationException("Simulator is read-only");
+	}
+
+	@Override
+	protected ArrayInputStreamAdapter<Object> getInputStreamAdapter() {
+		return new ArrayInputStreamAdapter<Object>(this);
+	}
+
+	@Override
+	protected IStreamAdapter<Tuple, Object[]> getOutputStreamAdapter() {
+		throw new UnsupportedOperationException("Simulator is read-only");
+	}
+
+	@Override
+	public Class<?> getType(FieldDef fieldDef, int index) {
+		Field field = space.getFields().get(index);
+		return getJavaType(field);
 	}
 
 }

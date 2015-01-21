@@ -20,13 +20,13 @@ public class AddressLine2Provider implements IValueProvider {
 		if (field.getDefault() == null) {
 			if (field.getProbability() == null) {
 				return df.getAddressLine2();
-			} else {
-				return df.getAddressLine2(field.getProbability());
 			}
-		} else {
-			return df.getAddressLine2(field.getProbability() == null ? 0
-					: field.getProbability(), field.getDefault());
+			return df.getAddressLine2(field.getProbability());
 		}
+		if (field.getProbability() == null) {
+			df.getAddressLine2(0, field.getDefault());
+		}
+		return df.getAddressLine2(field.getProbability(), field.getDefault());
 	}
 
 }

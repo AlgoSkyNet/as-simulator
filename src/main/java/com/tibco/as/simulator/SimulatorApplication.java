@@ -1,10 +1,14 @@
 package com.tibco.as.simulator;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParametersDelegate;
-import com.tibco.as.io.cli.Application;
+import com.tibco.as.io.cli.AbstractApplication;
+import com.tibco.as.io.cli.ICommand;
 
-public class SimulatorApplication extends Application {
+public class SimulatorApplication extends AbstractApplication {
 
 	@Parameter(names = { "-config" }, description = "XML configuration file")
 	private String configPath;
@@ -20,6 +24,11 @@ public class SimulatorApplication extends Application {
 	@Override
 	protected String getProgramName() {
 		return "as-simulator";
+	}
+
+	@Override
+	protected Collection<ICommand> getCommands() {
+		return new ArrayList<ICommand>();
 	}
 
 	@Override

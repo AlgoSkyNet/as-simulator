@@ -16,13 +16,13 @@ public class ShortProvider implements IValueProvider {
 
 	@Override
 	public Short getValue() {
-		if (field.getMin() == null)
-			if (field.getMax() == null)
+		if (field.getMin() == null) {
+			if (field.getMax() == null) {
 				return (short) random.nextInt();
-			else
-				return (short) random.nextInt(field.getMax());
-		else
-			return (short) random.nextInt(field.getMax() - field.getMin());
+			}
+			return (short) random.nextInt(field.getMax());
+		}
+		return (short) random.nextInt(field.getMax() - field.getMin());
 	}
 
 }

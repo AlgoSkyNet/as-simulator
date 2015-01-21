@@ -17,10 +17,10 @@ public class TextProvider implements IValueProvider {
 
 	@Override
 	public String getValue() {
-		if (field.getLength() == null)
+		if (field.getLength() == null) {
 			return df.getRandomText(field.getMinLength(), field.getMaxLength());
-		else
-			return df.getRandomText(field.getLength());
+		}
+		return df.getRandomText(field.getLength());
 	}
 
 }

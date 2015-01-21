@@ -25,14 +25,13 @@ public class ItemProvider implements IValueProvider {
 
 	@Override
 	public Object getValue() {
-		if (field.getDefault() == null)
-			if (field.getProbability() == null)
+		if (field.getDefault() == null) {
+			if (field.getProbability() == null) {
 				return df.getItem(values);
-			else
-				return df.getItem(values, field.getProbability());
-		else
-			return df.getItem(values, field.getProbability(),
-					field.getDefault());
+			}
+			return df.getItem(values, field.getProbability());
+		}
+		return df.getItem(values, field.getProbability(), field.getDefault());
 	}
 
 	private List<Object> getValues(Item field) {

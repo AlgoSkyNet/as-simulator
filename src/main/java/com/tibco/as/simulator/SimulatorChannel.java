@@ -1,19 +1,18 @@
 package com.tibco.as.simulator;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 
 import javax.xml.bind.JAXB;
 
 import org.fluttercode.datafactory.impl.DataFactory;
 
-import com.tibco.as.io.Channel;
+import com.tibco.as.io.AbstractChannel;
 import com.tibco.as.io.IDestination;
 import com.tibco.as.simulator.xml.DataValues;
 import com.tibco.as.simulator.xml.Simulation;
 import com.tibco.as.simulator.xml.Space;
 
-public class SimulatorChannel extends Channel {
+public class SimulatorChannel extends AbstractChannel {
 
 	private final static File DEFAULT_CONFIG_FILE = new File("simulation.xml");
 
@@ -26,12 +25,13 @@ public class SimulatorChannel extends Channel {
 	public void open() throws Exception {
 		loadConfig();
 		for (Space space : simulation.getSpace()) {
-			getDestinations().add(new SimulatorDestination(this, space));
+			SimulatorDestination destination = (SimulatorDestination) addDestination();
+			destination.setSpace(space);
 		}
 		super.open();
 	}
 
-	private void loadConfig() throws FileNotFoundException {
+	private void loadConfig() {
 		simulation = loadSimulation();
 		DataValues dataValues = simulation.getDataValues();
 		if (dataValues != null) {
@@ -106,6 +106,11 @@ public class SimulatorChannel extends Channel {
 			return DEFAULT_CONFIG_FILE;
 		}
 		return new File(configPath);
+	}
+
+	@Override
+	protected SimulatorDestination newDestination() {
+		return new SimulatorDestination(this);
 	}
 
 }

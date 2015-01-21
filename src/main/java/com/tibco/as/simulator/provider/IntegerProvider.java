@@ -16,14 +16,14 @@ public class IntegerProvider implements IValueProvider {
 
 	@Override
 	public Integer getValue() {
-		if (field.getMin() == null)
-			if (field.getMax() == null)
+		if (field.getMin() == null) {
+			if (field.getMax() == null) {
 				return random.nextInt();
-			else
-				return random.nextInt(field.getMax());
-		else
-			return field.getMin()
-					+ random.nextInt(field.getMax() - field.getMin());
+			}
+			return random.nextInt(field.getMax());
+
+		}
+		return field.getMin() + random.nextInt(field.getMax() - field.getMin());
 	}
 
 }

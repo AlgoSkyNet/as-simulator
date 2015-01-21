@@ -21,16 +21,12 @@ public class WordProvider implements IValueProvider {
 			if (field.isExactLength() == null) {
 				if (field.getLength() == null) {
 					return df.getRandomWord();
-				} else {
-					return df.getRandomWord(field.getLength());
 				}
-			} else {
-				return df.getRandomWord(field.getLength(),
-						field.isExactLength());
+				return df.getRandomWord(field.getLength());
 			}
-		} else {
-			return df.getRandomWord(field.getMinLength(), field.getMaxLength());
+			return df.getRandomWord(field.getLength(), field.isExactLength());
 		}
+		return df.getRandomWord(field.getMinLength(), field.getMaxLength());
 	}
 
 }

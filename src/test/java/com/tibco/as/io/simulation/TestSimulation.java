@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,7 +40,8 @@ import com.tibco.as.space.Space;
 import com.tibco.as.space.SpaceDef;
 import com.tibco.as.space.Tuple;
 import com.tibco.as.space.browser.Browser;
-import com.tibco.as.util.Utils;
+import com.tibco.as.util.file.FileUtils;
+import com.tibco.as.util.log.LogFactory;
 
 public class TestSimulation {
 
@@ -95,7 +97,10 @@ public class TestSimulation {
 			return;
 		}
 		spaces.clear();
+		Logger log = LogFactory.getLog(TestSimulation.class);
+		log.fine("Disconnecting from metaspace");
 		metaspace.closeAll();
+		log.fine("Disconnected from metaspace");
 	}
 
 	@Test
@@ -105,9 +110,9 @@ public class TestSimulation {
 	}
 
 	private void executeFile(String filename) throws Exception {
-		File file = Utils.copy(filename, Utils.createTempDirectory());
-		execute("-discovery tcp -distribution_role seeder -config "
-				+ file.getAbsolutePath());
+		File file = FileUtils.copy(filename, FileUtils.createTempDirectory());
+		String path = file.getAbsolutePath();
+		execute("-discovery tcp -distribution_role seeder -config " + path);
 	}
 
 	@Test
@@ -171,7 +176,8 @@ public class TestSimulation {
 
 	@Test
 	public void testNoConfig() throws Exception {
-		File file = new File(Utils.createTempDirectory(), "saved-config.xml");
+		File file = new File(FileUtils.createTempDirectory(),
+				"saved-config.xml");
 		metaspace.defineSpace(createSpaceDef());
 		Space space = metaspace.getSpace(SPACE_NAME, DistributionRole.SEEDER);
 		execute("-discovery tcp -config " + file.getAbsolutePath()
