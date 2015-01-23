@@ -1,6 +1,6 @@
 package com.tibco.as.simulator;
 
-import com.tibco.as.io.Operation;
+import com.tibco.as.io.OperationType;
 import com.tibco.as.space.Member.DistributionRole;
 
 public class Adapter {
@@ -21,12 +21,12 @@ public class Adapter {
 		return DistributionRole.valueOf(parse(name));
 	}
 
-	public static String printOperation(Operation operation) {
+	public static String printOperation(OperationType operation) {
 		return print(operation);
 	}
 
-	public static Operation parseOperation(String name) {
-		return Operation.valueOf(parse(name));
+	public static OperationType parseOperation(String name) {
+		return OperationType.valueOf(parse(name));
 	}
 
 }

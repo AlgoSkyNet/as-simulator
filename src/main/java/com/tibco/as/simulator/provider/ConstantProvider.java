@@ -1,7 +1,7 @@
 package com.tibco.as.simulator.provider;
 
-import com.tibco.as.simulator.Constant;
 import com.tibco.as.simulator.IValueProvider;
+import com.tibco.as.simulator.xml.Constant;
 
 public class ConstantProvider implements IValueProvider {
 

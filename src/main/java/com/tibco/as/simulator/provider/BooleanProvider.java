@@ -6,11 +6,7 @@ import com.tibco.as.simulator.IValueProvider;
 
 public class BooleanProvider implements IValueProvider {
 
-	private Random random;
-
-	public BooleanProvider(Random random) {
-		this.random = random;
-	}
+	private Random random = new Random();
 
 	@Override
 	public Boolean getValue() {

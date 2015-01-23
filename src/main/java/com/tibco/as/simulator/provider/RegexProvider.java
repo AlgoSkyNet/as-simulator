@@ -3,7 +3,7 @@ package com.tibco.as.simulator.provider;
 import nl.flotsam.xeger.Xeger;
 
 import com.tibco.as.simulator.IValueProvider;
-import com.tibco.as.simulator.Regex;
+import com.tibco.as.simulator.xml.Regex;
 
 public class RegexProvider implements IValueProvider {
 

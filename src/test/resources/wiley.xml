@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simulation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xsi:noNamespaceSchemaLocation="http://as.tibco.com/simulator.xsd">
+  <space name="Product" size="5000000">
+    <sequence field="ID" key="true" />
+    <item field="ProductType">
+      <value xsi:type="xsd:string">JOURNAL</value>
+      <value xsi:type="xsd:string">NONJOURNAL</value>
+    </item>
+    <item field="SourceSystem">
+      <value xsi:type="xsd:string">JCO</value>
+      <value xsi:type="xsd:string">CWS</value>
+      <value xsi:type="xsd:string">UKC</value>
+    </item>
+    <item field="MediaCode" probability="60">
+      <value xsi:type="xsd:string">G</value>
+      <value xsi:type="xsd:string">A</value>
+      <value xsi:type="xsd:string">F</value>
+    </item>
+    <boolean field="IssueBased" />
+    <item field="MediumCode" probability="50">
+      <value xsi:type="xsd:string">C</value>
+      <value xsi:type="xsd:string">E</value>
+      <value xsi:type="xsd:string">W</value>
+      <value xsi:type="xsd:string">S</value>
+      <value xsi:type="xsd:string">P</value>
+      <value xsi:type="xsd:string">A</value>
+      <value xsi:type="xsd:string">B</value>
+      <value xsi:type="xsd:string">M</value>
+      <value xsi:type="xsd:string">D</value>
+      <value xsi:type="xsd:string">O</value>
+      <value xsi:type="xsd:string">V</value>
+    </item>
+    <item field="SubMediumCode" probability="0">
+      <value xsi:type="xsd:string">S</value>
+    </item>
+    <boolean field="Frequency" />
+    <dateTime field="RecordUpdateTime" />
+  </space>
+
+</simulation>

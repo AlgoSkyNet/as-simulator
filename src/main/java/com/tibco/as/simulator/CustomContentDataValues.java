@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.fluttercode.datafactory.ContentDataValues;
 
-import com.tibco.as.simulator.Contents;
+import com.tibco.as.simulator.xml.Contents;
 
 public class CustomContentDataValues implements ContentDataValues {
 

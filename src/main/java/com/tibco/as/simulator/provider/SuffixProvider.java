@@ -3,7 +3,7 @@ package com.tibco.as.simulator.provider;
 import org.fluttercode.datafactory.impl.DataFactory;
 
 import com.tibco.as.simulator.IValueProvider;
-import com.tibco.as.simulator.Suffix;
+import com.tibco.as.simulator.xml.Suffix;
 
 public class SuffixProvider implements IValueProvider {
 

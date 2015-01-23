@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.fluttercode.datafactory.AddressDataValues;
 
-import com.tibco.as.simulator.Addresses;
+import com.tibco.as.simulator.xml.Addresses;
 
 public class CustomAddressDataValues implements AddressDataValues {
 
